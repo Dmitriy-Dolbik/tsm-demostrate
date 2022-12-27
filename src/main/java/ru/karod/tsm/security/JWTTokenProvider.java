@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import ru.karod.tsm.models.User;
-import ru.karod.tsm.repositories.UserRepository;
 
 import java.time.ZonedDateTime;
 import java.util.Date;
@@ -20,11 +19,10 @@ import java.util.Date;
 public class JWTTokenProvider {
     @Value("${jwt_secret}")
     private String secret;
-    private final UserRepository userRepository;
 
     public String generateToken(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-        Date expirationDate = Date.from(ZonedDateTime.now().plusMinutes(30).toInstant());
+        Date expirationDate = Date.from(ZonedDateTime.now().plusMinutes(60).toInstant());
 
         String userId = user.getId();
         return JWT.create()

@@ -1,14 +1,14 @@
 package ru.karod.tsm.annotations;
 
-import jakarta.validation.Constraint;
-import jakarta.validation.Payload;
-import ru.karod.tsm.validations.EmailValidator;
+import ru.karod.tsm.validations.PasswordValidator;
 
+import javax.validation.Constraint;
+import javax.validation.Payload;
 import java.lang.annotation.*;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = EmailValidator.class)
+@Constraint(validatedBy = PasswordValidator.class)
 @Documented
 public @interface ValidPassword {
     String message();

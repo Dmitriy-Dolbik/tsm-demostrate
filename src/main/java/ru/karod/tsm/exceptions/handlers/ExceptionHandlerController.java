@@ -1,10 +1,14 @@
-package ru.karod.tsm.exceptions;
+package ru.karod.tsm.exceptions.handlers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import ru.karod.tsm.exceptions.AuthException;
+import ru.karod.tsm.exceptions.ErrorResponse;
+import ru.karod.tsm.exceptions.InvalidRequestValuesException;
+import ru.karod.tsm.exceptions.NotFoundException;
 
 @Slf4j
 @ControllerAdvice

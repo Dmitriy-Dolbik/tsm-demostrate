@@ -1,9 +1,10 @@
 package ru.karod.tsm.validations;
 
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
 import ru.karod.tsm.annotations.PasswordMatches;
 import ru.karod.tsm.security.request.SignupRequest;
+
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
 public class PasswordMatchesValidator implements ConstraintValidator<PasswordMatches, Object> {
 

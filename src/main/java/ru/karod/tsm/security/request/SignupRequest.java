@@ -1,12 +1,12 @@
 package ru.karod.tsm.security.request;
 
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import ru.karod.tsm.annotations.PasswordMatches;
 import ru.karod.tsm.annotations.ValidEmail;
 import ru.karod.tsm.annotations.ValidPassword;
 
+import javax.persistence.Column;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Data

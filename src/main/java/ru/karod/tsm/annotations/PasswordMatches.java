@@ -1,10 +1,9 @@
 package ru.karod.tsm.annotations;
 
-import jakarta.validation.Constraint;
-import jakarta.validation.Payload;
-import ru.karod.tsm.validations.EmailValidator;
 import ru.karod.tsm.validations.PasswordMatchesValidator;
 
+import javax.validation.Constraint;
+import javax.validation.Payload;
 import java.lang.annotation.*;
 
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})

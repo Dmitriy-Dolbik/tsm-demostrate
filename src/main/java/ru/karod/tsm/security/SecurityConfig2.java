@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import ru.karod.tsm.services.CustomUserDetailsService;
 
-@EnableWebSecurity
+/*@EnableWebSecurity
 @EnableGlobalMethodSecurity(
         prePostEnabled = true,
         securedEnabled = true,
@@ -63,6 +63,6 @@ public class SecurityConfig2  extends WebSecurityConfigurerAdapter {
 
     @Bean
     PasswordEncoder getPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-}
+        return new BCryptPasswordEncoder()*/;
+ /*   }
+}*/

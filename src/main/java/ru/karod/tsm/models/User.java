@@ -1,20 +1,18 @@
 package ru.karod.tsm.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.karod.tsm.annotations.PasswordMatches;
 import ru.karod.tsm.annotations.ValidEmail;
 import ru.karod.tsm.annotations.ValidPassword;
 import ru.karod.tsm.models.enums.Role;
 import ru.karod.tsm.models.enums.UserStatus;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
@@ -51,7 +49,7 @@ public class User implements UserDetails {
     private String phoneNumber;
 
     @Column(name = "role")
-    @Enumerated (EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Column(name = "status")

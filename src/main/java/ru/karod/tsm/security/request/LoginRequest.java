@@ -1,9 +1,10 @@
 package ru.karod.tsm.security.request;
 
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import ru.karod.tsm.annotations.ValidEmail;
 import ru.karod.tsm.annotations.ValidPassword;
+
+import javax.validation.constraints.NotEmpty;
 
 @Data
 public class LoginRequest {
