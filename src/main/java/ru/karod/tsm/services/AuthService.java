@@ -47,7 +47,7 @@ public class AuthService {
             throw new AuthException("Incorrect credentials");
         }
     }
-    public void register(SignupRequest signupRequest, BindingResult bindingResult) {
+    public void register (SignupRequest signupRequest, BindingResult bindingResult) {
         User user = modelMapper.map(signupRequest, User.class);
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {

@@ -15,6 +15,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -23,8 +24,8 @@ import java.util.Collection;
 public class User implements UserDetails {
 
     @Id
-    @Column(name = "id")
-    private String id;
+    @Column(name = "id",columnDefinition = "uuid", updatable = false)
+    private UUID id;
 
     @Column(name = "first_name")
     @Size(min = 2, max = 30, message = "First name should be between 2 and 30 characters")

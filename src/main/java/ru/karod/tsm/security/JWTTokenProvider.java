@@ -13,6 +13,7 @@ import ru.karod.tsm.models.User;
 
 import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -24,10 +25,10 @@ public class JWTTokenProvider {
         User user = (User) authentication.getPrincipal();
         Date expirationDate = Date.from(ZonedDateTime.now().plusMinutes(60).toInstant());
 
-        String userId = user.getId();
+        UUID userId = user.getId();
         return JWT.create()
                 .withSubject("User details")
-                .withClaim("id", userId)
+                .withClaim("id", userId.toString())
                 .withClaim("email", user.getEmail())
                 .withIssuedAt(new Date())
                 .withIssuer("tsm")

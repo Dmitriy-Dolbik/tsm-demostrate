@@ -13,6 +13,7 @@ import ru.karod.tsm.repositories.UserRepository;
 
 import java.security.Principal;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -44,8 +45,9 @@ public class UserService {
     }
     public void createUser(User user) {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
+        //String userId = UUID.randomUUID().toString();
+        user.setId(UUID.randomUUID());
         user.setPassword(encodedPassword);
-        user.setRole(Role.ROLE_STUDENT);
         try {
             log.info("Saving User {}", user.getEmail());
             userRepository.save(user);
@@ -54,6 +56,4 @@ public class UserService {
             throw new InvalidRequestValuesException("The user " + user.getUsername() + " already exist. Please check credentials");
         }
     }
-
-
 }
