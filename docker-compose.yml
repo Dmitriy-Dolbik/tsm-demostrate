@@ -1,0 +1,16 @@
+volumes:
+  data:
+
+services:
+  tsm_db:
+    container_name: tsm_db
+    environment:
+      - POSTGRES_PASSWORD=321456tsm
+      - POSTGRES_USER=postgrestsm
+      - POSTGRES_DB=tsm_db
+      - PGDATA= C:\Users\Dmitriy\docker\volumes\postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - data:/var/lib/postgresql
+    image: postgres:15-alpine

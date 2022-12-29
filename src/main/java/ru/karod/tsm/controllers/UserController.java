@@ -13,6 +13,7 @@ import ru.karod.tsm.services.UserService;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.UUID;
 
 import static ru.karod.tsm.util.ErrorUtil.createErrorMessageToClient;
 

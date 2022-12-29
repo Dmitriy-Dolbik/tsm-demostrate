@@ -23,9 +23,12 @@ import java.util.UUID;
 @Table(name = "users")
 public class User implements UserDetails {
 
-    @Id
+    /*@Id
     @Column(name = "id",columnDefinition = "uuid", updatable = false)
-    private UUID id;
+    private UUID id;*/
+    @Id
+    @Column(name = "id", updatable = false)
+    private String id;
 
     @Column(name = "first_name")
     @Size(min = 2, max = 30, message = "First name should be between 2 and 30 characters")
@@ -46,7 +49,7 @@ public class User implements UserDetails {
     @Column(name = "age")
     private short age;
 
-    @Column(name = "phoneNumber")
+    @Column(name = "phone_number")
     private String phoneNumber;
 
     @Column(name = "role")
@@ -57,14 +60,14 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
-    @Column(name = "verifiedStatus")
+    @Column(name = "verified_status")
     private boolean verifiedStatus;
 
-    @Column(name = "verificationCode")
+    @Column(name = "verification_code")
     private short verificationCode;
 
     @JsonFormat(pattern = "yyyy-mm-dd HH:mm:ss")
-    @Column(name = "createdDate")
+    @Column(name = "created_date")
     private LocalDateTime createdDate;
 
     @PrePersist

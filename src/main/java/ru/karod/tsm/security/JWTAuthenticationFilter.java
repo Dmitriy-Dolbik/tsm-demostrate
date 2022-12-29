@@ -15,6 +15,7 @@ import ru.karod.tsm.models.User;
 import ru.karod.tsm.services.CustomUserDetailsService;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor

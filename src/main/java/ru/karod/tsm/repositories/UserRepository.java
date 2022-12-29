@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import ru.karod.tsm.models.User;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {

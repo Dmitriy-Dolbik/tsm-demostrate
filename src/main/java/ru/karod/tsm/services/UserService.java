@@ -45,8 +45,8 @@ public class UserService {
     }
     public void createUser(User user) {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
-        //String userId = UUID.randomUUID().toString();
-        user.setId(UUID.randomUUID());
+        String userId = UUID.randomUUID().toString();
+        user.setId(userId);
         user.setPassword(encodedPassword);
         try {
             log.info("Saving User {}", user.getEmail());
