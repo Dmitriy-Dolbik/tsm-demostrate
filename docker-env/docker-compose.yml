@@ -1,0 +1,11 @@
+services:
+  tsm_db:
+    container_name: tsm_db
+    image: postgres:15-alpine
+    env_file:
+      - dev.env
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data:/var/lib/postgresql
+    restart: unless-stopped
