@@ -23,12 +23,9 @@ import java.util.UUID;
 @Table(name = "users")
 public class User implements UserDetails {
 
-    /*@Id
-    @Column(name = "id",columnDefinition = "uuid", updatable = false)
-    private UUID id;*/
     @Id
-    @Column(name = "id", updatable = false)
-    private String id;
+    @Column(name = "id",columnDefinition = "uuid", updatable = false)
+    private UUID id;
 
     @Column(name = "first_name")
     @Size(min = 2, max = 30, message = "First name should be between 2 and 30 characters")

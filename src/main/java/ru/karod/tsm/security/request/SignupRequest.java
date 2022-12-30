@@ -20,8 +20,8 @@ public class SignupRequest {
     @NotEmpty(message = "Role should be not empty")
     private String role;
 
-/*    @NotEmpty(message = "Role should be not empty")
-    private List<String> languages;*/
+    @NotEmpty(message = "Role should be not empty")
+    private List<String> languages;
 
     @Column(name = "password")
     @ValidPassword(message = "Please enter the password according to the requirements: " +

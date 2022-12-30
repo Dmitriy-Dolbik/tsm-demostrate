@@ -8,6 +8,8 @@ import ru.karod.tsm.exceptions.NotFoundException;
 import ru.karod.tsm.models.User;
 import ru.karod.tsm.repositories.UserRepository;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
@@ -18,7 +20,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .orElseThrow(()->new NotFoundException
                         ("User not found with email: " + email));
     }
-    public User loadUserById(String id){
+    public User loadUserById(UUID id){
         return userRepository.findUserById(id)
                 .orElseThrow(()->new NotFoundException
                         ("User not found with id: " + id));
