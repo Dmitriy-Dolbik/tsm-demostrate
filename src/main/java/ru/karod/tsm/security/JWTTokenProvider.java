@@ -25,11 +25,10 @@ public class JWTTokenProvider {
         User user = (User) authentication.getPrincipal();
         Date expirationDate = Date.from(ZonedDateTime.now().plusMinutes(60).toInstant());
 
-        //UUID userId = user.getId();
-        String userId = user.getId();
+        UUID userId = user.getId();
         return JWT.create()
                 .withSubject("User details")
-                .withClaim("id", userId)
+                .withClaim("id", userId.toString())
                 .withClaim("email", user.getEmail())
                 .withIssuedAt(new Date())
                 .withIssuer("tsm")

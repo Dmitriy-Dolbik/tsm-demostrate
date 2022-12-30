@@ -18,7 +18,7 @@ public class AppConfig {
 
         modelMapper.typeMap(SignupRequest.class, User.class)
                 .setPostConverter(context -> {
-                    context.getDestination().setRole(Role.valueOf(context.getSource().getRole()));;
+                    context.getDestination().setRole(Role.valueOf(context.getSource().getRole()));
                     return context.getDestination();
                 });
 

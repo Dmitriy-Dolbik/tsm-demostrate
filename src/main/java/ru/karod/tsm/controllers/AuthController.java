@@ -22,14 +22,15 @@ public class AuthController {
 
     @PostMapping("/sign_in")
     public ResponseEntity<Object> authenticateUser(@RequestBody @Valid
-                                                       LoginRequest loginRequest,
-                                                   BindingResult bindingResult){
+                                                   LoginRequest loginRequest,
+                                                   BindingResult bindingResult) {
         return authService.login(loginRequest, bindingResult);
     }
+
     @PostMapping("/sign_up")
     public ResponseEntity<Object> registerUser(@RequestBody @Valid
-                                                   SignupRequest signupRequest,
-                                               BindingResult bindingResult){
+                                               SignupRequest signupRequest,
+                                               BindingResult bindingResult) {
         authService.register(signupRequest, bindingResult);
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }

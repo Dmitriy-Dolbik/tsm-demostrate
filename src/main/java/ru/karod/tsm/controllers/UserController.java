@@ -19,14 +19,13 @@ import static ru.karod.tsm.util.ErrorUtil.createErrorMessageToClient;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
     private final ModelMapper modelMapper;
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDTO> getUserProfile(@PathVariable("userId") String userId){
+    public ResponseEntity<UserDTO> getUserProfile(@PathVariable("userId") UUID userId){
         User user = userService.getUserById(userId);
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
 

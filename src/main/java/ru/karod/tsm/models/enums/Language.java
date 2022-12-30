@@ -1,6 +1,6 @@
 package ru.karod.tsm.models.enums;
 
-public enum Languages {
+public enum Language {
     ENGLISH,
     GERMAN,
     FRENCH,

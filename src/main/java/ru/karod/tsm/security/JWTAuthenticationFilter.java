@@ -38,7 +38,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             } else {
                 try {
                     String userId = jwtTokenProvider.getUserIdFromToken(jwt);
-                    User userDetails = customUserDetailsService.loadUserById(userId);
+                    User userDetails = customUserDetailsService.loadUserById(UUID.fromString(userId));
 
                     UsernamePasswordAuthenticationToken authToken =
                             new UsernamePasswordAuthenticationToken(
@@ -50,6 +50,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                     }
                 } catch (JWTVerificationException exs) {
                     log.error("Could not set user authentication");
+                    exs.printStackTrace();
+
                 }
             }
         }

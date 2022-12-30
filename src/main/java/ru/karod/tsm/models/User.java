@@ -23,12 +23,9 @@ import java.util.UUID;
 @Table(name = "users")
 public class User implements UserDetails {
 
-    /*@Id
-    @Column(name = "id",columnDefinition = "uuid", updatable = false)
-    private UUID id;*/
     @Id
-    @Column(name = "id", updatable = false)
-    private String id;
+    @Column(name = "id",columnDefinition = "uuid", updatable = false)
+    private UUID id;
 
     @Column(name = "first_name")
     @Size(min = 2, max = 30, message = "First name should be between 2 and 30 characters")
@@ -43,11 +40,9 @@ public class User implements UserDetails {
     @ValidEmail(message = "Invalid Email")
     private String email;
     @Column(name = "password")
-    @ValidPassword(message = "Please enter the password according to the requirements: " +
-            "from 6 to 20 characters, at least one digit or Latin letter is required")
     private String password;
     @Column(name = "age")
-    private short age;
+    private Short age;
 
     @Column(name = "phone_number")
     private String phoneNumber;
@@ -64,7 +59,7 @@ public class User implements UserDetails {
     private boolean verifiedStatus;
 
     @Column(name = "verification_code")
-    private short verificationCode;
+    private Short verificationCode;
 
     @JsonFormat(pattern = "yyyy-mm-dd HH:mm:ss")
     @Column(name = "created_date")
