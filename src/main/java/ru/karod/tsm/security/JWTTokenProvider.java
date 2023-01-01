@@ -5,6 +5,8 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -25,10 +27,10 @@ public class JWTTokenProvider {
         User user = (User) authentication.getPrincipal();
         Date expirationDate = Date.from(ZonedDateTime.now().plusMinutes(60).toInstant());
 
-        UUID userId = user.getId();
+        String userId = user.getId();
         return JWT.create()
                 .withSubject("User details")
-                .withClaim("id", userId.toString())
+                .withClaim("id", userId)
                 .withClaim("email", user.getEmail())
                 .withIssuedAt(new Date())
                 .withIssuer("tsm")

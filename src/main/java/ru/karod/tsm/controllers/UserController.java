@@ -13,7 +13,6 @@ import ru.karod.tsm.services.UserService;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.UUID;
 
 import static ru.karod.tsm.util.ErrorUtil.createErrorMessageToClient;
 
@@ -25,7 +24,7 @@ public class UserController {
     private final ModelMapper modelMapper;
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDTO> getUserProfile(@PathVariable("userId") UUID userId){
+    public ResponseEntity<UserDTO> getUserProfile(@PathVariable("userId") String userId){
         User user = userService.getUserById(userId);
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
 

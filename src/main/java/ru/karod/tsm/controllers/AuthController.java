@@ -16,7 +16,6 @@ import javax.validation.Valid;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 @CrossOrigin
-@PreAuthorize("permitAll()")
 public class AuthController {
     private final AuthService authService;
 

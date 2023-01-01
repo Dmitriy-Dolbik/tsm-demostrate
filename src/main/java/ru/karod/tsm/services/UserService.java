@@ -39,9 +39,9 @@ public class UserService {
                         "Username not found with email : " + email));
     }
 
-    public User getUserById(UUID userId) {
+    public User getUserById(String userId) {
         return userRepository.findById(userId).orElseThrow(() ->
-                new UsernameNotFoundException("User cannot be found"));
+                new UsernameNotFoundException("User with id: " +userId + " cannot be found"));
     }
 
     public Optional<User> findUserByEmail(String email) {
@@ -50,15 +50,17 @@ public class UserService {
 
     public void createUser(User user) {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setId(UUID.randomUUID());
+        String userId = UUID.randomUUID().toString();
+        user.setId(userId);
         user.setPassword(encodedPassword);
+        user.setVerifiedStatus(false);
         try {
             log.info("Saving User {}", user.getEmail());
             userRepository.save(user);
         } catch (RollbackException rolExc) {
             rolExc.printStackTrace();
             log.error("Error during registration. {}", rolExc.getMessage());
-            throw new InvalidRequestValuesException("The user " + user.getUsername() + ". Error during registration: " + rolExc.getMessage());
+            throw new InvalidRequestValuesException("The user with email " + user.getUsername() + ". Error during registration: " + rolExc.getMessage());
         }
     }
 }

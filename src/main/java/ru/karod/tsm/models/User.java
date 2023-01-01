@@ -15,6 +15,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -25,7 +26,7 @@ public class User implements UserDetails {
 
     @Id
     @Column(name = "id",columnDefinition = "uuid", updatable = false)
-    private UUID id;
+    private String id;
 
     @Column(name = "first_name")
     @Size(min = 2, max = 30, message = "First name should be between 2 and 30 characters")
@@ -60,6 +61,14 @@ public class User implements UserDetails {
 
     @Column(name = "verification_code")
     private Short verificationCode;
+
+    @ManyToMany
+    @JoinTable(
+            name = "teacher_subject",
+            joinColumns = @JoinColumn(name = "teacher_id"),
+            inverseJoinColumns = @JoinColumn (name = "subject_id")
+    )
+    private List<Subject> subjects;
 
     @JsonFormat(pattern = "yyyy-mm-dd HH:mm:ss")
     @Column(name = "created_date")

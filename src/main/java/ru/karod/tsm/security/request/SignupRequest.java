@@ -5,10 +5,8 @@ import ru.karod.tsm.annotations.PasswordMatches;
 import ru.karod.tsm.annotations.ValidEmail;
 import ru.karod.tsm.annotations.ValidPassword;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
-import java.util.UUID;
 
 @Data
 @PasswordMatches(message = "The entered passwords do not match")
@@ -21,11 +19,12 @@ public class SignupRequest {
     @NotEmpty(message = "Role should be not empty")
     private String role;
 
-    /*@NotEmpty(message = "Role should be not empty")
-    private List<UUID> languagesId;*/
+    @NotEmpty(message = "Languages should be not empty")
+    private List<String> subjectIdList;
 
     @ValidPassword(message = "Please enter the password according to the requirements: " +
             "from 6 to 20 characters, at least one digit or Latin letter is required")
     private String password;
     private String confirmPassword;
 }
+

@@ -20,7 +20,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .orElseThrow(()->new NotFoundException
                         ("User not found with email: " + email));
     }
-    public User loadUserById(UUID id){
+    public User loadUserById(String id){
         return userRepository.findUserById(id)
                 .orElseThrow(()->new NotFoundException
                         ("User not found with id: " + id));

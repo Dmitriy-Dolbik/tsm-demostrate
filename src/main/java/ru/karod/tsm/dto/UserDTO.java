@@ -16,8 +16,6 @@ public class UserDTO {
     private String firstName;
     @Size(min = 2, max = 30, message = "Last name should be between 2 and 30 characters")
     private String lastName;
-    @Column(name = "age")
     private short age;
-    @Column(name = "phoneNumber")
     private String phoneNumber;
 }
