@@ -19,6 +19,8 @@ import ru.karod.tsm.security.request.SignupRequest;
 import ru.karod.tsm.security.response.JWTTokenSuccessResponse;
 import ru.karod.tsm.validations.UserValidator;
 
+import javax.servlet.http.HttpServletRequest;
+
 import static ru.karod.tsm.util.ErrorUtil.createErrorMessageToClient;
 
 @Service
@@ -47,15 +49,20 @@ public class AuthService {
             throw new AuthException("Incorrect credentials");
         }
     }
-    public void register (SignupRequest signupRequest, BindingResult bindingResult) {
+    public void register (SignupRequest signupRequest, BindingResult bindingResult, HttpServletRequest request) {
         User user = modelMapper.map(signupRequest, User.class);
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
             String errorMsg = createErrorMessageToClient(bindingResult);
             throw new AuthException(errorMsg);
         }
-        userService.createUser(user);
+        userService.register(user, getSiteURL(request));
     }
+    private String getSiteURL(HttpServletRequest request) {
+        String siteURL = request.getRequestURL().toString();
+        return siteURL.replace(request.getServletPath(), "");
+    }
+
 
 
 }

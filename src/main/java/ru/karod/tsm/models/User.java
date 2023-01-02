@@ -56,11 +56,12 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
-    @Column(name = "verified_status")
-    private boolean verifiedStatus;
+    @Column(name = "enabled")
+    private boolean enabled;
 
-    @Column(name = "verification_code")
-    private Short verificationCode;
+    @Column(name = "verification_code", length = 64)
+    private String verificationCode;
+
 
     @ManyToMany
     @JoinTable(

@@ -10,6 +10,7 @@ import ru.karod.tsm.security.request.SignupRequest;
 import ru.karod.tsm.services.AuthService;
 import ru.karod.tsm.util.MessageResponse;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
@@ -29,8 +30,9 @@ public class AuthController {
     @PostMapping("/sign_up")
     public ResponseEntity<Object> registerUser(@RequestBody @Valid
                                                SignupRequest signupRequest,
-                                               BindingResult bindingResult) {
-        authService.register(signupRequest, bindingResult);
+                                               BindingResult bindingResult,
+                                               HttpServletRequest request) {
+        authService.register(signupRequest, bindingResult, request);
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
