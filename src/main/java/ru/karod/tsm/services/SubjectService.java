@@ -18,7 +18,7 @@ import java.util.UUID;
 public class SubjectService {
     private final SubjectRepository subjectRepository;
 
-    @PostConstruct // - включаем аннотацию, чтобы метод выполнился
+    //@PostConstruct // - включаем аннотацию, чтобы метод выполнился
     // один раз после запуска приложения, создав все subjects из Enum
     public void createAllSubjects() {
         for (Language language : Language.values()){

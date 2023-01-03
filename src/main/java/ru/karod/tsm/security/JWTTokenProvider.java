@@ -31,7 +31,6 @@ public class JWTTokenProvider {
         return JWT.create()
                 .withSubject("User details")
                 .withClaim("id", userId)
-                .withClaim("email", user.getEmail())
                 .withIssuedAt(new Date())
                 .withIssuer("tsm")
                 .withExpiresAt(expirationDate)
@@ -44,8 +43,21 @@ public class JWTTokenProvider {
                 .withIssuer("tsm")
                 .build();
 
-        DecodedJWT jwt = verifier.verify(token);
-        String userId = jwt.getClaim("id").asString();
+        DecodedJWT decodedJwt = verifier.verify(token);
+
+        System.out.println("Header =  " + decodedJwt.getHeader());
+        System.out.println("Algorithm =  " + decodedJwt.getAlgorithm());
+        System.out.println("Audience =  " + decodedJwt.getAudience());
+        decodedJwt.getClaims().forEach((k, v) -> {
+            System.out.println("Claim " + k + " = " + v.asString());
+        });
+        System.out.println("ContentType =  " + decodedJwt.getContentType());
+        System.out.println("ExpiresAt =  " + decodedJwt.getExpiresAt());
+        System.out.println("Id =  " + decodedJwt.getId());
+        System.out.println("Issuer =  " + decodedJwt.getIssuer());
+        System.out.println("Subject =  " + decodedJwt.getSubject());
+
+        String userId = decodedJwt.getClaim("id").asString();
         return userId;
     }
 }

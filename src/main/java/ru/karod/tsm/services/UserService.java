@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.karod.tsm.dto.UserDTO;
 import ru.karod.tsm.exceptions.InvalidRequestValuesException;
+import ru.karod.tsm.exceptions.NotFoundException;
 import ru.karod.tsm.models.User;
 import ru.karod.tsm.repositories.UserRepository;
 
@@ -52,7 +53,7 @@ public class UserService {
 
     public User getUserById(String userId) {
         return userRepository.findById(userId).orElseThrow(() ->
-                new UsernameNotFoundException("User with id: " +userId + " cannot be found"));
+                new UsernameNotFoundException("User with id: " + userId + " cannot be found"));
     }
 
     public Optional<User> findUserByEmail(String email) {
@@ -68,7 +69,7 @@ public class UserService {
 
         String randomCode = RandomString.make(64);
         user.setVerificationCode(randomCode);
-        user.setEnabled(false);
+        user.setVerified(false);
 
         try {
             log.info("Saving User {}", user.getEmail());
@@ -81,6 +82,7 @@ public class UserService {
 
         sendVerificationEmail(user, siteURL);
     }
+
     private void sendVerificationEmail(User user, String siteURL) {
         String toAddress = user.getEmail();//куда отправляем
         String fromAddress = companyEmail;//откуда отправляем
@@ -100,11 +102,11 @@ public class UserService {
             helper.setTo(toAddress);//куда отправляем
             helper.setSubject(subject);//тема письма
 
-            String fullUserName = user.getFirstName()+" "+ user.getLastName();
+            String fullUserName = user.getFirstName() + " " + user.getLastName();
 
             content = content.replace("[[name]]", fullUserName);
 
-            String verifyURL = siteURL + "/verify?code=" + user.getVerificationCode();
+            String verifyURL = siteURL + "/auth/verify?code=" + user.getVerificationCode();
 
             content = content.replace("[[URL]]", verifyURL);
 
@@ -118,5 +120,18 @@ public class UserService {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+    }
+
+    public boolean verify(String verificationCode) {
+        User user = userRepository.findByVerificationCode(verificationCode)
+                .orElseThrow(() -> new NotFoundException(
+                        "The account can't be verify. " +
+                                "It maybe already verified, or verification code is incorrect"));
+
+        user.setVerificationCode(null);
+        user.setVerified(true);
+        userRepository.save(user);
+
+        return true;
     }
 }

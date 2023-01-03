@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import ru.karod.tsm.exceptions.AuthException;
+import ru.karod.tsm.exceptions.NotFoundException;
 import ru.karod.tsm.models.User;
 import ru.karod.tsm.security.JWTTokenProvider;
 import ru.karod.tsm.security.SecurityConstants;
@@ -37,6 +38,15 @@ public class AuthService {
             String errorMsg = createErrorMessageToClient(bindingResult);
             throw new AuthException(errorMsg);
         }
+
+        String userEmail = loginRequest.getEmail();
+        User user = userService.findUserByEmail(userEmail).orElseThrow(
+                () -> new NotFoundException("User with email " + userEmail + " cannot be found")
+        );
+        if (!user.isVerified()){
+            throw new AuthException("User email isn't verified");
+        }
+
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                 loginRequest.getEmail(),
                 loginRequest.getPassword());
