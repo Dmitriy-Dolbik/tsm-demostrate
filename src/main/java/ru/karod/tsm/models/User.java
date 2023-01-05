@@ -25,7 +25,7 @@ import java.util.UUID;
 public class User implements UserDetails {
 
     @Id
-    @Column(name = "id",columnDefinition = "uuid", updatable = false)
+    @Column(name = "id", updatable = false)
     private String id;
 
     @Column(name = "first_name")

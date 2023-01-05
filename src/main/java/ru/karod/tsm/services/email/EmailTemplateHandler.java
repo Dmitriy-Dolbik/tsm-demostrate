@@ -1,16 +1,10 @@
 package ru.karod.tsm.services.email;
 
-import org.springframework.stereotype.Service;
+import javax.validation.constraints.NotNull;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import ru.karod.tsm.models.enums.EmailType;
 
-@Service
-@RequiredArgsConstructor
-@Slf4j
-public class EmailTemplateHandler
+public interface EmailTemplateHandler
 {
-    public String getTemplate(EmailType typeOfEmail){
-        return;
-    }
+    String getTemplate(@NotNull final EmailType typeOfEmail);
 }

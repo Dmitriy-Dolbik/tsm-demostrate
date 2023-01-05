@@ -1,6 +1,7 @@
 package ru.karod.tsm.models.enums;
 
-public enum UserStatus {
+public enum UserStatus
+{
     ARCHIVED,
     ACTIVE,
     NONACTIVE

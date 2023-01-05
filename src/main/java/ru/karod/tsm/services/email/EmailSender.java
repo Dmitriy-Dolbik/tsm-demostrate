@@ -2,17 +2,9 @@ package ru.karod.tsm.services.email;
 
 import java.util.Map;
 
-import org.springframework.stereotype.Service;
+import javax.validation.constraints.NotNull;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
-@Service
-@RequiredArgsConstructor
-@Slf4j
-public class EmailSender
+public interface EmailSender
 {
-    public void sendEmail (String email, Map<String, String> params, String template){
-
-    }
+    void sendEmail (@NotNull final String email, @NotNull final Map<String, String> params, @NotNull final String template);
 }

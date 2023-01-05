@@ -21,6 +21,7 @@ import ru.karod.tsm.security.request.LoginRequest;
 import ru.karod.tsm.security.request.SignupRequest;
 import ru.karod.tsm.security.response.JWTTokenSuccessResponse;
 import ru.karod.tsm.services.AuthenticationService;
+import ru.karod.tsm.services.UserService;
 import ru.karod.tsm.validations.UserValidator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,10 +31,10 @@ import static ru.karod.tsm.util.ErrorUtil.createErrorMessageToClient;
 
 @Service
 @RequiredArgsConstructor
-public class TmsAuthenticationServiceImpl implements AuthenticationService
+public class TsmAuthenticationServiceImpl implements AuthenticationService
 {
     private final ModelMapper modelMapper;
-    private final UserServices tsmUserServiceImpl;
+    private final UserService tsmUserServiceImpl;
     private final AuthenticationManager authenticationManager;
     private final JWTTokenProvider jwtTokenProvider;
     private final UserValidator userValidator;
