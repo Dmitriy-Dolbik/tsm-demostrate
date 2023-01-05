@@ -5,12 +5,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import ru.karod.tsm.models.User;
-import ru.karod.tsm.services.UserService;
+import ru.karod.tsm.services.impl.TsmUserServiceImpl;
 
 @Component
 @RequiredArgsConstructor
 public class UserValidator implements Validator {
-    private final UserService userService;
+    private final TsmUserServiceImpl tsmUserServiceImpl;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -20,7 +20,7 @@ public class UserValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         User user = (User) target;
-        if (userService.findUserByEmail(user.getEmail()).isPresent()){
+        if (tsmUserServiceImpl.findUserByEmail(user.getEmail()).isPresent()){
             errors.rejectValue("email", "", "User with this email already exists");
         }
     }

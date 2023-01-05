@@ -1,21 +1,18 @@
-package ru.karod.tsm.services;
+package ru.karod.tsm.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.NotAcceptableStatusException;
 import ru.karod.tsm.exceptions.NotFoundException;
 import ru.karod.tsm.models.Subject;
 import ru.karod.tsm.models.enums.Language;
 import ru.karod.tsm.repositories.SubjectRepository;
 
-import javax.annotation.PostConstruct;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class SubjectService {
+public class TsmSubjectServiceImpl {
     private final SubjectRepository subjectRepository;
 
     //@PostConstruct // - включаем аннотацию, чтобы метод выполнился

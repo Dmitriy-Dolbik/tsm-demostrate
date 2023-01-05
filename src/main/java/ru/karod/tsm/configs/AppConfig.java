@@ -7,12 +7,12 @@ import org.springframework.context.annotation.Configuration;
 import ru.karod.tsm.models.User;
 import ru.karod.tsm.models.enums.Role;
 import ru.karod.tsm.security.request.SignupRequest;
-import ru.karod.tsm.services.SubjectService;
+import ru.karod.tsm.services.impl.TsmSubjectServiceImpl;
 
 @Configuration
 @RequiredArgsConstructor
 public class AppConfig {
-    private final SubjectService subjectService;
+    private final TsmSubjectServiceImpl tsmSubjectServiceImpl;
 
     @Bean
     public ModelMapper modelMapper() {
@@ -23,7 +23,7 @@ public class AppConfig {
                     context.getDestination().setRole(Role.valueOf(context.getSource().getRole()));
                     context.getDestination().setSubjects(
                             context.getSource().getSubjectIdList().stream()
-                                    .map(subjectId -> subjectService.findSubjectById(subjectId))
+                                    .map(subjectId -> tsmSubjectServiceImpl.findSubjectById(subjectId))
                                     .toList());
                     return context.getDestination();
                 });

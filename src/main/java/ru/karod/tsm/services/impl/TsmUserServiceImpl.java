@@ -1,4 +1,4 @@
-package ru.karod.tsm.services;
+package ru.karod.tsm.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +26,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UserService {
+public class TsmUserServiceImpl {
     @Value("${company_email}")
     private String companyEmail;
     @Value("${company_name}")
@@ -88,7 +88,7 @@ public class UserService {
         String fromAddress = companyEmail;//откуда отправляем
         String senderName = companyName;//название компании
         String subject = "Please verify your registration";//тема письма
-        String content = "Dear customer,<br>"//шаблон письма
+        String content = "Dear customer, $name,<br>"//шаблон письма
                 + "Please click the link below to verify your registration:<br>"
                 + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
                 + "Thank you,<br>"
@@ -104,7 +104,7 @@ public class UserService {
 
             String fullUserName = user.getFirstName() + " " + user.getLastName();
 
-            content = content.replace("[[name]]", fullUserName);
+            //content = content.replace("[[name]]", fullUserName);
 
             String verifyURL = siteURL + "/auth/verify?code=" + user.getVerificationCode();
 

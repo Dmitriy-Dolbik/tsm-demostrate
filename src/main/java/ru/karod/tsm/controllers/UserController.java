@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.karod.tsm.dto.UserDTO;
 import ru.karod.tsm.exceptions.InvalidRequestValuesException;
 import ru.karod.tsm.models.User;
-import ru.karod.tsm.services.UserService;
+import ru.karod.tsm.services.impl.TsmUserServiceImpl;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -20,12 +20,12 @@ import static ru.karod.tsm.util.ErrorUtil.createErrorMessageToClient;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
-    private final UserService userService;
+    private final TsmUserServiceImpl tsmUserServiceImpl;
     private final ModelMapper modelMapper;
 
     @GetMapping("/{userId}")
     public ResponseEntity<UserDTO> getUserProfile(@PathVariable("userId") String userId){
-        User user = userService.getUserById(userId);
+        User user = tsmUserServiceImpl.getUserById(userId);
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
 
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
@@ -38,7 +38,7 @@ public class UserController {
             String errorMsg = createErrorMessageToClient(bindingResult);
             throw new InvalidRequestValuesException(errorMsg);
         }
-        User user = userService.updateUser(userDTO, principal);
+        User user = tsmUserServiceImpl.updateUser(userDTO, principal);
 
         UserDTO userUpdated = modelMapper.map(user, UserDTO.class);
         return new ResponseEntity<>(userUpdated, HttpStatus.OK);

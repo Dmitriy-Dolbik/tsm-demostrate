@@ -1,4 +1,4 @@
-package ru.karod.tsm.services;
+package ru.karod.tsm.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,11 +8,9 @@ import ru.karod.tsm.exceptions.NotFoundException;
 import ru.karod.tsm.models.User;
 import ru.karod.tsm.repositories.UserRepository;
 
-import java.util.UUID;
-
 @Service
 @RequiredArgsConstructor
-public class CustomUserDetailsService implements UserDetailsService {
+public class TsmCustomUserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String email) {

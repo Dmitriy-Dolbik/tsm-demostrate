@@ -12,17 +12,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ru.karod.tsm.models.User;
-import ru.karod.tsm.services.CustomUserDetailsService;
+import ru.karod.tsm.services.impl.TsmCustomUserDetailsServiceImpl;
 
 import java.io.IOException;
-import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
     private final JWTTokenProvider jwtTokenProvider;
-    private final CustomUserDetailsService customUserDetailsService;
+    private final TsmCustomUserDetailsServiceImpl tsmCustomUserDetailsServiceImpl;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
@@ -38,7 +37,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             } else {
                 try {
                     String userId = jwtTokenProvider.getUserIdFromToken(jwt);
-                    User userDetails = customUserDetailsService.loadUserById(userId);
+                    User userDetails = tsmCustomUserDetailsServiceImpl.loadUserById(userId);
 
                     UsernamePasswordAuthenticationToken authToken =
                             new UsernamePasswordAuthenticationToken(
