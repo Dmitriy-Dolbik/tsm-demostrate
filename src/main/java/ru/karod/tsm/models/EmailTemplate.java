@@ -18,6 +18,8 @@ public class EmailTemplate
     @Id
     @Column(name = "id")
     private String id;
+    @Column(name = "subject")
+    private String subject;
     @Column(name = "template")
     private String template;
     @Column(name = "email_type")
