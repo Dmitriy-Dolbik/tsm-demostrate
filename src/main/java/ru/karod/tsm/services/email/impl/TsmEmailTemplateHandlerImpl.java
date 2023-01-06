@@ -6,7 +6,10 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import ru.karod.tsm.exceptions.NotFoundException;
+import ru.karod.tsm.models.EmailTemplate;
 import ru.karod.tsm.models.enums.EmailType;
+import ru.karod.tsm.repositories.EmailTemplateRepository;
 import ru.karod.tsm.services.email.EmailTemplateHandler;
 
 @Service
@@ -14,9 +17,14 @@ import ru.karod.tsm.services.email.EmailTemplateHandler;
 @Slf4j
 public class TsmEmailTemplateHandlerImpl implements EmailTemplateHandler
 {
-    @Override
-    public String getTemplate(@NotNull final EmailType typeOfEmail){
+    private final EmailTemplateRepository emailTemplateRepository;
 
-        return;
+    @Override
+    public EmailTemplate getTemplate(@NotNull final EmailType emailType)
+    {
+        EmailTemplate emailTemplate = emailTemplateRepository.findByEmailType(emailType).orElseThrow(
+                () -> new NotFoundException("Email template with emailType " + emailType +" cannot be found")
+        );
+        return emailTemplate;
     }
 }

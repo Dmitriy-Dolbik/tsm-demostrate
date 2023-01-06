@@ -2,6 +2,7 @@ package ru.karod.tsm.services.impl;
 
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -24,8 +25,11 @@ import ru.karod.tsm.dto.UserDTO;
 import ru.karod.tsm.exceptions.InvalidRequestValuesException;
 import ru.karod.tsm.exceptions.NotFoundException;
 import ru.karod.tsm.models.User;
+import ru.karod.tsm.models.enums.EmailType;
 import ru.karod.tsm.repositories.UserRepository;
 import ru.karod.tsm.services.UserService;
+import ru.karod.tsm.services.email.EmailSender;
+import ru.karod.tsm.services.email.MapCreator;
 
 @Service
 @RequiredArgsConstructor
@@ -39,6 +43,7 @@ public class TsmUserServiceImpl implements UserService
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JavaMailSender mailSender;
+    private final EmailSender tsmEmailSenderImpl;
 
     @Override
     public User updateUser(@NotNull final UserDTO userDTO, @NotNull final Principal principal)
@@ -97,19 +102,18 @@ public class TsmUserServiceImpl implements UserService
             log.error("Error during registration. {}", rolExc.getMessage());
             throw new InvalidRequestValuesException("The user with email " + user.getUsername() + ". Error during registration: " + rolExc.getMessage());
         }
-
-        sendVerificationEmail(user, siteURL);
+        tsmEmailSenderImpl.sendEmail(user, EmailType.REGISTRATION, siteURL);
     }
 
-    private void sendVerificationEmail(@NotNull final User user, String siteURL)
+    /*private void sendVerificationEmail(@NotNull final User user, String siteURL)
     {
-        String toAddress = user.getEmail();//куда отправляем
-        String fromAddress = companyEmail;//откуда отправляем
-        String senderName = companyName;//название компании
-        String subject = "Please verify your registration";//тема письма
-        String content = "Dear customer, $name,<br>"//шаблон письма
+        String toAddress = user.getEmail();
+        String fromAddress = companyEmail;
+        String senderName = companyName;
+        String subject = "Please verify your registration";
+        String content = "Dear customer,<br>"
                 + "Please click the link below to verify your registration:<br>"
-                + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
+                + "<h3><a href=\"${URL}\" target=\"_self\">VERIFY</a></h3>"
                 + "Thank you,<br>"
                 + "TSM project.";
 
@@ -144,7 +148,7 @@ public class TsmUserServiceImpl implements UserService
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-    }
+    }*/
 
     @Override
     public boolean verify(@NotNull final String verificationCode)
