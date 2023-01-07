@@ -39,7 +39,9 @@ public class TsmEmailSenderImpl implements EmailSender
     private String filePath;
 
     @Override
-    public void sendEmail(@NotNull final User user, @NotNull final EmailType emailType, @NotNull final String siteURL)
+    public void sendEmail(@NotNull final String userEmail,
+                          @NotNull final Map<String, String> params,
+                          @NotNull final EmailType emailType)
     {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
@@ -49,29 +51,13 @@ public class TsmEmailSenderImpl implements EmailSender
         try
         {
             helper.setFrom(companyEmail, companyName);
-            helper.setTo(user.getEmail());
+            helper.setTo(userEmail);
             helper.setSubject(emailTemplate.getSubject());
-
-            StringBuilder fullUsername = new StringBuilder();
-            if (user.getFirstName() != null)
-            {
-                fullUsername.append(user.getFirstName());
-            }
-            if (user.getLastName() != null)
-            {
-                fullUsername.append(user.getFirstName());
-            }
-            if (fullUsername.isEmpty())
-            {
-                fullUsername.append("customer");
-            }
-
-            String verifyURL = siteURL + "/auth/verify?code=" + user.getVerificationCode();
 
             String templateServerFileName = emailTemplate.getTemplateServerFileName();
             String content = getHtmlTemplateFromServer(templateServerFileName)
-                    .replace("${name}", fullUsername.toString())
-                    .replace("${verification_url}", verifyURL);
+                    .replace("${name}", params.get("name"))
+                    .replace("${verification_url}", params.get("verificationURL"));
 
             helper.setText(content, true);
 

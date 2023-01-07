@@ -9,8 +9,8 @@ import ru.karod.tsm.models.enums.EmailType;
 
 public interface EmailSender
 {
-    void sendEmail (@NotNull final User user,
-                    @NotNull final EmailType template,
-                    @NotNull final String siteURL);
+    void sendEmail (@NotNull final String email,
+                    @NotNull final Map<String, String> params,
+                    @NotNull final EmailType emailType);
 
 }
