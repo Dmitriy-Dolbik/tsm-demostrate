@@ -12,7 +12,7 @@ import java.util.UUID;
 @Table(name = "subject")
 public class Subject {
     @Id
-    @Column(name = "id",columnDefinition = "uuid", updatable = false)
+    @Column(name = "id", updatable = false)
     private String id;
 
     @Column(name = "title")

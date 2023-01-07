@@ -5,7 +5,10 @@ import ru.karod.tsm.annotations.PasswordMatches;
 import ru.karod.tsm.annotations.ValidEmail;
 import ru.karod.tsm.annotations.ValidPassword;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 import java.util.List;
 
 @Data
@@ -18,6 +21,12 @@ public class SignupRequest {
 
     @NotEmpty(message = "Role should be not empty")
     private String role;
+
+    @Size(min = 2, max = 30, message = "First name should be between 2 and 30 characters")
+    private String firstName;
+
+    @Size(min = 2, max = 30, message = "Last name should be between 2 and 30 characters")
+    private String lastName;
 
     @NotEmpty(message = "Languages should be not empty")
     private List<String> subjectIdList;

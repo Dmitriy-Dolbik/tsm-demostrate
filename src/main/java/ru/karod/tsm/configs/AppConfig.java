@@ -1,18 +1,19 @@
 package ru.karod.tsm.configs;
 
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import lombok.RequiredArgsConstructor;
 import ru.karod.tsm.models.User;
 import ru.karod.tsm.models.enums.Role;
 import ru.karod.tsm.security.request.SignupRequest;
-import ru.karod.tsm.services.impl.TsmSubjectServiceImpl;
+import ru.karod.tsm.services.SubjectService;
 
 @Configuration
 @RequiredArgsConstructor
 public class AppConfig {
-    private final TsmSubjectServiceImpl tsmSubjectServiceImpl;
+    private final SubjectService tsmSubjectServiceImpl;
 
     @Bean
     public ModelMapper modelMapper() {

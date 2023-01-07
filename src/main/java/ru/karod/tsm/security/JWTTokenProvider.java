@@ -1,21 +1,20 @@
 package ru.karod.tsm.security;
 
+import java.time.ZonedDateTime;
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
+
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Component;
-import ru.karod.tsm.models.User;
 
-import java.time.ZonedDateTime;
-import java.util.Date;
-import java.util.UUID;
+import lombok.RequiredArgsConstructor;
+import ru.karod.tsm.models.User;
 
 @Component
 @RequiredArgsConstructor

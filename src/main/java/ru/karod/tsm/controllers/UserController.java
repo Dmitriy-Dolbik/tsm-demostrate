@@ -1,40 +1,52 @@
 package ru.karod.tsm.controllers;
 
-import lombok.RequiredArgsConstructor;
+import java.security.Principal;
+
+import javax.validation.Valid;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import lombok.RequiredArgsConstructor;
 import ru.karod.tsm.dto.UserDTO;
 import ru.karod.tsm.exceptions.InvalidRequestValuesException;
 import ru.karod.tsm.models.User;
-import ru.karod.tsm.services.impl.TsmUserServiceImpl;
-
-import javax.validation.Valid;
-import java.security.Principal;
+import ru.karod.tsm.services.UserService;
 
 import static ru.karod.tsm.util.ErrorUtil.createErrorMessageToClient;
 
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
-public class UserController {
-    private final TsmUserServiceImpl tsmUserServiceImpl;
+public class UserController
+{
+    private final UserService tsmUserServiceImpl;
     private final ModelMapper modelMapper;
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDTO> getUserProfile(@PathVariable("userId") String userId){
+    public ResponseEntity<UserDTO> getUserProfile(@PathVariable("userId") String userId)
+    {
         User user = tsmUserServiceImpl.getUserById(userId);
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
 
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
-    @PostMapping ("/update")
+
+    @PostMapping("/update")
     public ResponseEntity<Object> updateUser(@Valid @RequestBody UserDTO userDTO,
                                              BindingResult bindingResult,
-                                             Principal principal){
-        if (bindingResult.hasErrors()){
+                                             Principal principal)
+    {
+        if (bindingResult.hasErrors())
+        {
             String errorMsg = createErrorMessageToClient(bindingResult);
             throw new InvalidRequestValuesException(errorMsg);
         }

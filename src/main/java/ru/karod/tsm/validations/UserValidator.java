@@ -5,12 +5,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import ru.karod.tsm.models.User;
+import ru.karod.tsm.services.UserService;
 import ru.karod.tsm.services.impl.TsmUserServiceImpl;
 
 @Component
 @RequiredArgsConstructor
 public class UserValidator implements Validator {
-    private final TsmUserServiceImpl tsmUserServiceImpl;
+    private final UserService tsmUserServiceImpl;
 
     @Override
     public boolean supports(Class<?> clazz) {

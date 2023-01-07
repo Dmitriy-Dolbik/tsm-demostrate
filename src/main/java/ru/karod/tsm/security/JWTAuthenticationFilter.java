@@ -1,27 +1,30 @@
 package ru.karod.tsm.security;
 
-import com.auth0.jwt.exceptions.JWTVerificationException;
+import java.io.IOException;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import ru.karod.tsm.models.User;
-import ru.karod.tsm.services.impl.TsmCustomUserDetailsServiceImpl;
 
-import java.io.IOException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import ru.karod.tsm.models.User;
+import ru.karod.tsm.services.CustomUserDetailsService;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
     private final JWTTokenProvider jwtTokenProvider;
-    private final TsmCustomUserDetailsServiceImpl tsmCustomUserDetailsServiceImpl;
+    private final CustomUserDetailsService tsmCustomUserDetailsServiceImpl;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
