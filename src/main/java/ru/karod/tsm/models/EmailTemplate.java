@@ -20,8 +20,8 @@ public class EmailTemplate
     private String id;
     @Column(name = "subject")
     private String subject;
-    @Column(name = "template")
-    private String template;
+    @Column(name = "template_server_file_name")
+    private String templateServerFileName;
     @Column(name = "email_type")
     @Enumerated(EnumType.STRING)
     private EmailType emailType;

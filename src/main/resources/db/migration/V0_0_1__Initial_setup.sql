@@ -102,9 +102,8 @@ VALUES ('ef97eb6f-3396-4b39-97f0-7eecf7510d56', 'ENGLISH'),
        ('982f6415-b05c-460a-9fc3-45b6c5005c34', 'SPANISH'),
        ('9ff47c27-5192-47ed-88b8-3f80c84efe02', 'CHINESE');
 
-INSERT INTO email_template (id, subject, template, email_type)
-VALUES ('ef97eb6f-3396-4b39-97f0-7eecf7510d56', 'Please verify your registration', 'Dear {{user}},<br>
-Please click the link below to verify your registration:<br>
-<h3><a href=\"{{URL}}\" target=\"_self\">VERIFY</a></h3>
-Thank you,<br>
-TSM project.', 'REGISTRATION');
+INSERT INTO email_template (id, subject, template_server_file_name, email_type)
+VALUES ('ef97eb6f-3396-4b39-97f0-7eecf7510d56'
+, 'Please verify your registration'
+, '131bba98-1002-4b51-977e-c91e05b45765.html'
+, 'REGISTRATION');

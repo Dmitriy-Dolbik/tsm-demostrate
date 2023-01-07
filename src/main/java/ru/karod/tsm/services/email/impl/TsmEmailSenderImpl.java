@@ -1,6 +1,10 @@
 package ru.karod.tsm.services.email.impl;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
 
 import javax.mail.MessagingException;
@@ -31,6 +35,8 @@ public class TsmEmailSenderImpl implements EmailSender
     private String companyEmail;
     @Value("${company_name}")
     private String companyName;
+    @Value("${html_templates_for_email_storage}")
+    private String filePath;
 
     @Override
     public void sendEmail(@NotNull final User user, @NotNull final EmailType emailType, @NotNull final String siteURL)
@@ -59,11 +65,13 @@ public class TsmEmailSenderImpl implements EmailSender
             {
                 fullUsername.append("customer");
             }
+
             String verifyURL = siteURL + "/auth/verify?code=" + user.getVerificationCode();
 
-            String content = emailTemplate.getTemplate();
-            content = content.replace("{{name}}", fullUsername.toString());
-            content = content.replace("{{verification_url}}", verifyURL);
+            String templateServerFileName = emailTemplate.getTemplateServerFileName();
+            String content = getHtmlTemplateFromServer(templateServerFileName)
+                    .replace("${name}", fullUsername.toString())
+                    .replace("${verification_url}", verifyURL);
 
             helper.setText(content, true);
 
@@ -77,6 +85,18 @@ public class TsmEmailSenderImpl implements EmailSender
         catch (UnsupportedEncodingException e)
         {
             e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    private String getHtmlTemplateFromServer(String serverFileName)
+    {
+        try
+        {
+            return Files.readString(Paths.get(filePath + serverFileName));
+        }
+        catch (IOException e)
+        {
             throw new RuntimeException(e);
         }
     }
