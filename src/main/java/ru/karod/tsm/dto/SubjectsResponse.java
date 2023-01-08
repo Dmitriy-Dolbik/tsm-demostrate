@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 public class SubjectsResponse {
-    private List<SubjectDTO> subjectList_ADDDSAFFALKHLAHLALH;
+    private List<SubjectDTO> subjectList;
 
     public SubjectsResponse(List<SubjectDTO> subjectList){
         this.subjectList = subjectList;
