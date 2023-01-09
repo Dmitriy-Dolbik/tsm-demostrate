@@ -5,16 +5,15 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import lombok.RequiredArgsConstructor;
 import ru.karod.tsm.models.User;
 import ru.karod.tsm.util.EmailUtil;
 
-import static ru.karod.tsm.util.EmailUtil.getFullNameForEmailTemplate;
-import static ru.karod.tsm.util.EmailUtil.getVerifyURLForUser;
-
 @Component
+@RequiredArgsConstructor
 public class RegistrationEmailParametersPopulator implements TsmPopulator<User>
 {
-    private EmailUtil emailUtil;
+    private final EmailUtil emailUtil;
 
     /**
      * Имя
@@ -27,12 +26,12 @@ public class RegistrationEmailParametersPopulator implements TsmPopulator<User>
     @Override
     public Map<String, String> populate(final User source)
     {
-        String verifyURL = getVerifyURLForUser(source);
-        String name = getFullNameForEmailTemplate(source);
+        String verifyURL = emailUtil.getVerifyURLForUser(source);
+        String name = emailUtil.getFullNameForEmailTemplate(source);
 
         Map<String, String> params = new HashMap<>();
-        params.put("name", name);
-        params.put("verificationURL", verifyURL);
+        params.put("${name}", name);
+        params.put("${verification_url}", verifyURL);
         return params;
     }
 }

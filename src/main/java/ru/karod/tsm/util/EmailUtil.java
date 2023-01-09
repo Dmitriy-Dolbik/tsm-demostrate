@@ -1,22 +1,24 @@
 package ru.karod.tsm.util;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import ru.karod.tsm.models.User;
 
+@Component
 public class EmailUtil
 {
     @Value("${site_url}")
-    private static String SITE_URL;
+    private String siteURL;
     @Value("${registration_postfix}")
-    private static String REGISTRATION_POSTFIX;
+    private String registrationPostfix;
 
-    public static String getVerifyURLForUser(User user){
-        String verifyURL = SITE_URL + REGISTRATION_POSTFIX + user.getVerificationCode();
+    public String getVerifyURLForUser(User user){
+        String verifyURL = siteURL + registrationPostfix + user.getVerificationCode();
         return verifyURL;
     }
 
-    public static String getFullNameForEmailTemplate(User user){
+    public String getFullNameForEmailTemplate(User user){
         StringBuilder fullUsername = new StringBuilder();
         if (user.getFirstName() != null)
         {

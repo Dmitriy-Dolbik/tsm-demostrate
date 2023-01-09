@@ -21,19 +21,6 @@ public class TsmSubjectServiceImpl implements SubjectService
 {
     private final SubjectRepository subjectRepository;
 
-    //@PostConstruct // - включаем аннотацию, чтобы метод выполнился
-    // один раз после запуска приложения, создав все subjects из Enum
-    public void createAllSubjects()
-    {
-        for (Language language : Language.values())
-        {
-            Subject subject = new Subject();
-            subject.setId(UUID.randomUUID().toString());
-            subject.setLanguage(language);
-            subjectRepository.save(subject);
-        }
-    }
-
     @Override
     public List<Subject> findAll()
     {

@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.print.DocFlavor;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -55,11 +56,11 @@ public class TsmEmailSenderImpl implements EmailSender
             helper.setSubject(emailTemplate.getSubject());
 
             String templateServerFileName = emailTemplate.getTemplateServerFileName();
-            String content = getHtmlTemplateFromServer(templateServerFileName)
-                    .replace("${name}", params.get("name"))
-                    .replace("${verification_url}", params.get("verificationURL"));
+            String htmlTemplate = getHtmlTemplateFromServer(templateServerFileName);
 
-            helper.setText(content, true);
+            String contentToSent = replacePlaceholders(htmlTemplate, params);
+
+            helper.setText(contentToSent, true);
 
             mailSender.send(message);
         }
@@ -85,5 +86,13 @@ public class TsmEmailSenderImpl implements EmailSender
         {
             throw new RuntimeException(e);
         }
+    }
+    private String replacePlaceholders(String htmlTemplate, Map<String, String> params){
+        for (Map.Entry<String, String> entry : params.entrySet()){
+            String placeholder = entry.getKey();
+            String value = entry.getValue();
+            htmlTemplate = htmlTemplate.replace(placeholder, value);
+        }
+        return htmlTemplate;
     }
 }
