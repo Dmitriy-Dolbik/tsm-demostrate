@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import ru.karod.tsm.exceptions.EmailSendingException;
 import ru.karod.tsm.models.EmailTemplate;
 import ru.karod.tsm.models.User;
 import ru.karod.tsm.models.enums.EmailType;
@@ -64,15 +65,11 @@ public class TsmEmailSenderImpl implements EmailSender
 
             mailSender.send(message);
         }
-        catch (MessagingException e)
+        catch (MessagingException | UnsupportedEncodingException e)
         {
             e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-        catch (UnsupportedEncodingException e)
-        {
-            e.printStackTrace();
-            throw new RuntimeException(e);
+            throw new EmailSendingException(String.format("Error during send [%s] email, message: [%s]", emailType, e.getMessage()));
+
         }
     }
 

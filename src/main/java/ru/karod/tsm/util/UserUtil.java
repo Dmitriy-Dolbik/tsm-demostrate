@@ -1,12 +1,14 @@
 package ru.karod.tsm.util;
 
+import javax.validation.constraints.NotNull;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import ru.karod.tsm.models.User;
 
 @Component
-public class EmailUtil
+public class UserUtil
 {
     @Value("${site_url}")
     private String siteURL;
@@ -14,11 +16,10 @@ public class EmailUtil
     private String registrationPostfix;
 
     public String getVerifyURLForUser(User user){
-        String verifyURL = siteURL + registrationPostfix + user.getVerificationCode();
-        return verifyURL;
+        return siteURL + registrationPostfix + user.getVerificationCode();
     }
 
-    public String getFullNameForEmailTemplate(User user){
+    public String getFullNameForEmailTemplate(@NotNull final User user){
         StringBuilder fullUsername = new StringBuilder();
         if (user.getFirstName() != null)
         {
@@ -26,7 +27,9 @@ public class EmailUtil
         }
         if (user.getLastName() != null)
         {
-            fullUsername.append(user.getFirstName());
+            fullUsername
+                    .append(" ")
+                    .append(user.getFirstName());
         }
         if (fullUsername.isEmpty())
         {
