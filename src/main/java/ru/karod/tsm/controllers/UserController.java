@@ -20,8 +20,7 @@ import ru.karod.tsm.dto.UserDTO;
 import ru.karod.tsm.exceptions.InvalidRequestValuesException;
 import ru.karod.tsm.models.User;
 import ru.karod.tsm.services.UserService;
-
-import static ru.karod.tsm.util.ErrorUtil.createErrorMessageToClient;
+import ru.karod.tsm.util.ErrorUtil;
 
 @RestController
 @RequestMapping("/user")
@@ -30,6 +29,7 @@ public class UserController
 {
     private final UserService tsmUserServiceImpl;
     private final ModelMapper modelMapper;
+    private final ErrorUtil tsmErrorUtilImpl;
 
     @GetMapping("/{userId}")
     public ResponseEntity<UserDTO> getUserProfile(@PathVariable("userId") String userId)
@@ -47,7 +47,7 @@ public class UserController
     {
         if (bindingResult.hasErrors())
         {
-            String errorMsg = createErrorMessageToClient(bindingResult);
+            String errorMsg = tsmErrorUtilImpl.createErrorMessageToClient(bindingResult);
             throw new InvalidRequestValuesException(errorMsg);
         }
         User user = tsmUserServiceImpl.updateUser(userDTO, principal);

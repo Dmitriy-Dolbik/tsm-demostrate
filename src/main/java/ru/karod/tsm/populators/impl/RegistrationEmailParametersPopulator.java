@@ -1,4 +1,4 @@
-package ru.karod.tsm.populators;
+package ru.karod.tsm.populators.impl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,13 +10,18 @@ import org.springframework.stereotype.Component;
 import lombok.RequiredArgsConstructor;
 import ru.karod.tsm.models.User;
 import ru.karod.tsm.models.enums.EmailType;
-import ru.karod.tsm.util.UserUtil;
+import ru.karod.tsm.populators.TsmPopulator;
+import ru.karod.tsm.util.impl.TsmUserUtilImpl;
 
+/**
+ * The class for collecting parameters which will be used to replace placeholders of the html template for
+ * email with type {@link EmailType #REGISTRATION}
+ */
 @Component
 @RequiredArgsConstructor
 public class RegistrationEmailParametersPopulator implements TsmPopulator<User>
 {
-    private final UserUtil userUtil;
+    private final TsmUserUtilImpl tsmUserUtilImpl;
 
     /**
      * @param source user
@@ -27,8 +32,8 @@ public class RegistrationEmailParametersPopulator implements TsmPopulator<User>
     @Override
     public Map<String, String> populate(@NotNull final User source)
     {
-        String verifyURL = userUtil.getVerifyURLForUser(source);
-        String fullName = userUtil.getFullNameForEmailTemplate(source);
+        String verifyURL = tsmUserUtilImpl.getVerifyURLForUser(source);
+        String fullName = tsmUserUtilImpl.getFullNameForEmailTemplate(source);
 
         Map<String, String> params = new HashMap<>();
         params.put("${fullName}", fullName);

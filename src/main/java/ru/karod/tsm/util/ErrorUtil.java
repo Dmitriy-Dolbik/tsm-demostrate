@@ -1,24 +1,17 @@
 package ru.karod.tsm.util;
 
-import org.springframework.util.CollectionUtils;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 
-import java.util.List;
-
-public class ErrorUtil {
-    public static String createErrorMessageToClient(BindingResult bindingResult){
-        StringBuilder errorMsg = new StringBuilder();
-
-        List<ObjectError> objectErrors = bindingResult.getAllErrors();
-        if (!CollectionUtils.isEmpty(objectErrors)){
-            for (ObjectError error : objectErrors){
-                errorMsg.append(error.getCode())
-                        .append(" - ")
-                        .append(error.getDefaultMessage() == null ? error.getCode():error.getDefaultMessage())
-                        .append("; ");
-            }
-        }
-        return errorMsg.toString();
-    }
+/**
+ * The supporting class for working with error data
+ */
+public interface ErrorUtil
+{
+    /**
+     * @param bindingResult
+     * @return an error message to send to a client
+     */
+    String createErrorMessageToClient(@NotNull final BindingResult bindingResult);
 }

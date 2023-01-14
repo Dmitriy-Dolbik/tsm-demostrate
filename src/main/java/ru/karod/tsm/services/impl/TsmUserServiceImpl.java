@@ -18,11 +18,8 @@ import ru.karod.tsm.dto.UserDTO;
 import ru.karod.tsm.exceptions.InvalidRequestValuesException;
 import ru.karod.tsm.exceptions.NotFoundException;
 import ru.karod.tsm.models.User;
-import ru.karod.tsm.models.enums.EmailType;
-import ru.karod.tsm.populators.TsmPopulator;
 import ru.karod.tsm.repositories.UserRepository;
 import ru.karod.tsm.services.UserService;
-import ru.karod.tsm.services.email.EmailSender;
 import ru.karod.tsm.services.email.NotificationService;
 
 @Service

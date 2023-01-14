@@ -1,7 +1,5 @@
 package ru.karod.tsm.services.email.impl;
 
-import java.util.Map;
-
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
@@ -11,6 +9,9 @@ import ru.karod.tsm.populators.TsmPopulator;
 import ru.karod.tsm.services.email.EmailSender;
 import ru.karod.tsm.services.email.NotificationService;
 
+/**
+ * @inheritance {@link NotificationService}
+ */
 @RequiredArgsConstructor
 @Component
 public class TsmNotificationService implements NotificationService
@@ -19,11 +20,10 @@ public class TsmNotificationService implements NotificationService
     private final TsmPopulator<User> registrationEmailParametersPopulator;
 
     public void sendVerificationLetterForUser(User user){
-        Map<String, String> parameters = registrationEmailParametersPopulator.populate(user);
-        String emailOfUser = user.getEmail();
-        emailSender.sendEmail(emailOfUser, parameters, EmailType.REGISTRATION);
+        emailSender.sendEmail(user.getEmail()
+                , registrationEmailParametersPopulator.populate(user)
+                , EmailType.REGISTRATION);
     }
-
 
     // Методы для отправки других типо писем
     //необходимо создать invitationEmailPopulator

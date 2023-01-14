@@ -1,6 +1,7 @@
 package ru.karod.tsm.services.impl;
 
-import lombok.RequiredArgsConstructor;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotNull;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
+import lombok.RequiredArgsConstructor;
 import ru.karod.tsm.exceptions.AuthException;
 import ru.karod.tsm.exceptions.NotFoundException;
 import ru.karod.tsm.models.User;
@@ -22,12 +24,8 @@ import ru.karod.tsm.security.request.SignupRequest;
 import ru.karod.tsm.security.response.JWTTokenSuccessResponse;
 import ru.karod.tsm.services.AuthenticationService;
 import ru.karod.tsm.services.UserService;
+import ru.karod.tsm.util.ErrorUtil;
 import ru.karod.tsm.validations.UserValidator;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotNull;
-
-import static ru.karod.tsm.util.ErrorUtil.createErrorMessageToClient;
 
 @Service
 @RequiredArgsConstructor
@@ -38,13 +36,14 @@ public class TsmAuthenticationServiceImpl implements AuthenticationService
     private final AuthenticationManager authenticationManager;
     private final JWTTokenProvider jwtTokenProvider;
     private final UserValidator userValidator;
+    private final ErrorUtil tsmErrorUtilImpl;
 
     @Override
     public ResponseEntity<Object> login(@NotNull final LoginRequest loginRequest, @NotNull final BindingResult bindingResult)
     {
         if (bindingResult.hasErrors())
         {
-            String errorMsg = createErrorMessageToClient(bindingResult);
+            String errorMsg = tsmErrorUtilImpl.createErrorMessageToClient(bindingResult);
             throw new AuthException(errorMsg);
         }
 
@@ -80,7 +79,7 @@ public class TsmAuthenticationServiceImpl implements AuthenticationService
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors())
         {
-            String errorMsg = createErrorMessageToClient(bindingResult);
+            String errorMsg = tsmErrorUtilImpl.createErrorMessageToClient(bindingResult);
             throw new AuthException(errorMsg);
         }
         tsmUserServiceImpl.register(user, getSiteURL(request));

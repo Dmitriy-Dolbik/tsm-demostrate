@@ -1,6 +1,5 @@
 package ru.karod.tsm.services.email.impl;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
@@ -9,7 +8,6 @@ import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import javax.print.DocFlavor;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -20,12 +18,15 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ru.karod.tsm.exceptions.EmailSendingException;
+import ru.karod.tsm.exceptions.ReadingFileException;
 import ru.karod.tsm.models.EmailTemplate;
-import ru.karod.tsm.models.User;
 import ru.karod.tsm.models.enums.EmailType;
 import ru.karod.tsm.services.email.EmailSender;
 import ru.karod.tsm.services.email.EmailTemplateHandler;
 
+/**
+ * @inheritance {@link EmailSender}
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -39,6 +40,7 @@ public class TsmEmailSenderImpl implements EmailSender
     private String companyName;
     @Value("${html_templates_for_email_storage}")
     private String filePath;
+
 
     @Override
     public void sendEmail(@NotNull final String userEmail,
@@ -81,15 +83,23 @@ public class TsmEmailSenderImpl implements EmailSender
         }
         catch (IOException e)
         {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new ReadingFileException(String.format("Error during reading html template, message: [%s]", e.getMessage()));
         }
     }
-    private String replacePlaceholders(String htmlTemplate, Map<String, String> params){
-        for (Map.Entry<String, String> entry : params.entrySet()){
+
+    private String replacePlaceholders(String htmlTemplate, Map<String, String> params)
+    {
+        return params.entrySet().stream()
+                .reduce(htmlTemplate
+                        , (template, entry) -> template.replace(entry.getKey(), entry.getValue())
+                        , (t1, t2) -> t1);
+    }
+
+        /*for (Map.Entry<String, String> entry : params.entrySet()){
             String placeholder = entry.getKey();
             String value = entry.getValue();
             htmlTemplate = htmlTemplate.replace(placeholder, value);
         }
-        return htmlTemplate;
-    }
+        return htmlTemplate;*/
 }
