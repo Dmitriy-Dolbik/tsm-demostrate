@@ -9,18 +9,15 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
+import ru.karod.tsm.services.email.EmailSender;
 import ru.karod.tsm.util.ErrorUtil;
 
 /**
- * The supporting class for working with error data
+ * @inheritance {@link ErrorUtil}
  */
 @Component
 public class TsmErrorUtilImpl implements ErrorUtil
 {
-    /**
-     * @param bindingResult
-     * @return an error message to send to a client
-     */
     @Override
     public String createErrorMessageToClient(@NotNull final BindingResult bindingResult){
         StringBuilder errorMsg = new StringBuilder();
