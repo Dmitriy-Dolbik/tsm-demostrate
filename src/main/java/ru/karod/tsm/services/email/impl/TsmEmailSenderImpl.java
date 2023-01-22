@@ -90,16 +90,13 @@ public class TsmEmailSenderImpl implements EmailSender
 
     private String replacePlaceholders(String htmlTemplate, Map<String, String> params)
     {
-        return params.entrySet().stream()
-                .reduce(htmlTemplate
-                        , (template, entry) -> template.replace(entry.getKey(), entry.getValue())
-                        , (t1, t2) -> t1);
-    }
-
-        /*for (Map.Entry<String, String> entry : params.entrySet()){
+        for (Map.Entry<String, String> entry : params.entrySet()){
             String placeholder = entry.getKey();
             String value = entry.getValue();
             htmlTemplate = htmlTemplate.replace(placeholder, value);
         }
-        return htmlTemplate;*/
+        return htmlTemplate;
+    }
+
+
 }
