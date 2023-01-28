@@ -11,6 +11,8 @@ import ru.karod.tsm.dto.SubjectDTO;
 import ru.karod.tsm.dto.SubjectsResponse;
 import ru.karod.tsm.services.SubjectService;
 
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/subject")
 @RequiredArgsConstructor
@@ -21,6 +23,6 @@ public class SubjectController {
     public ResponseEntity<SubjectsResponse> getSubjects() {
         return ResponseEntity.ok(new SubjectsResponse(tsmSubjectServiceImpl.findAll().stream()
                 .map(subject -> modelMapper.map(subject, SubjectDTO.class))
-                .toList()));
+                .collect(Collectors.toList())));
     }
 }

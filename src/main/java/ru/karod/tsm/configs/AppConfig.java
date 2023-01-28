@@ -10,6 +10,8 @@ import ru.karod.tsm.models.enums.Role;
 import ru.karod.tsm.security.request.SignupRequest;
 import ru.karod.tsm.services.SubjectService;
 
+import java.util.stream.Collectors;
+
 @Configuration
 @RequiredArgsConstructor
 public class AppConfig {
@@ -25,7 +27,7 @@ public class AppConfig {
                     context.getDestination().setSubjects(
                             context.getSource().getSubjectIdList().stream()
                                     .map(subjectId -> tsmSubjectServiceImpl.findSubjectById(subjectId))
-                                    .toList());
+                                    .collect(Collectors.toList()));
                     return context.getDestination();
                 });
         return modelMapper;
