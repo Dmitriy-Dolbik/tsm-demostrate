@@ -39,7 +39,7 @@ public class TsmUserUtilImpl implements UserUtil
                     .append(" ")
                     .append(user.getLastName());
         }
-        if (fullUsername.isEmpty())
+        if (fullUsername.length() == 0)
         {
             fullUsername.append("customer");
         }
