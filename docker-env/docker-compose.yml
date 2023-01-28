@@ -1,4 +1,15 @@
 services:
+  tsm-project:
+    image: tsm-project:latest
+    container_name: tsm-project
+    ports:
+      - 8080:8080
+    env_file:
+      - dev.env
+    depends_on:
+      - tsm_db
+      - smtp
+
   tsm_db:
     container_name: tsm_db
     image: postgres:15-alpine
