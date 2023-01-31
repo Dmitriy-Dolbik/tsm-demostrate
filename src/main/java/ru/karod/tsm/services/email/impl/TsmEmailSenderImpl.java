@@ -1,5 +1,6 @@
 package ru.karod.tsm.services.email.impl;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,8 +40,6 @@ public class TsmEmailSenderImpl implements EmailSender
     private String companyEmail;
     @Value("${company_name}")
     private String companyName;
-    @Value("${html_templates_for_email_storage}")
-    private String filePath;
 
 
     @Override
@@ -75,11 +75,12 @@ public class TsmEmailSenderImpl implements EmailSender
         }
     }
 
-    private String getHtmlTemplateFromServer(String serverFileName)
+    private String getHtmlTemplateFromServer(String templateName)
     {
         try
         {
-            return Files.readString(Paths.get(filePath + serverFileName));
+            File file = ResourceUtils.getFile("classpath:templates/email/" + templateName);
+            return Files.readString(file.toPath());
         }
         catch (IOException e)
         {
@@ -90,7 +91,8 @@ public class TsmEmailSenderImpl implements EmailSender
 
     private String replacePlaceholders(String htmlTemplate, Map<String, String> params)
     {
-        for (Map.Entry<String, String> entry : params.entrySet()){
+        for (Map.Entry<String, String> entry : params.entrySet())
+        {
             String placeholder = entry.getKey();
             String value = entry.getValue();
             htmlTemplate = htmlTemplate.replace(placeholder, value);

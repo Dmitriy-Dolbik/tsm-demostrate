@@ -1,16 +1,22 @@
 services:
   tsm-project:
-    image: tsm-project:latest
+    image: tsm-project
     container_name: tsm-project
     ports:
       - 8080:8080
-    env_file:
-      - dev.env
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://tsm_postgres:5432/tsm_db
+      - SPRING_DATASOURCE_USERNAME=postgrestsm
+      - SPRING_DATASOURCE_PASSWORD=321456tsm
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=validate
+    volumes:
+      - ./config:/config
     depends_on:
-      - tsm_db
+      - tsm_postgres
       - smtp
+      - flyway
 
-  tsm_db:
+  tsm_postgres:
     container_name: tsm_db
     image: postgres:15-alpine
     env_file:
@@ -26,4 +32,18 @@ services:
     ports:
       - 1025:1025
       - 8025:8025
+    environment:
+      - SPRING_MAIL_HOST=smtp
+      - SPRING_MAIL_PORT=1025
+
+  flyway:
+    container_name: flyway
+    image: flyway/flyway:9.12-alpine
+    command: -configFiles=/flyway/conf/flyway.config -locations=filesystem:/flyway/sql -connectRetries=60 migrate
+    volumes:
+        - ./flyway/db/migration:/flyway/sql
+        - ./flyway/flyway.conf:/flyway/conf/flyway.config
+    depends_on:
+        - tsm_postgres
+
 
