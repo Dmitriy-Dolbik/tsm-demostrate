@@ -1,11 +1,12 @@
 package ru.karod.tsm.services.email.impl;
 
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -15,7 +16,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -75,12 +75,12 @@ public class TsmEmailSenderImpl implements EmailSender
         }
     }
 
-    private String getHtmlTemplateFromServer(String templateName)
+    private String getHtmlTemplateFromServer(String templateFileName)
     {
-        try
+        try (InputStream inputStream = getClass().getResourceAsStream("/templates/email/" + templateFileName))
         {
-            File file = ResourceUtils.getFile("classpath:templates/email/" + templateName);
-            return Files.readString(file.toPath());
+            return new BufferedReader(new InputStreamReader(inputStream))
+                    .lines().collect(Collectors.joining("\n"));
         }
         catch (IOException e)
         {

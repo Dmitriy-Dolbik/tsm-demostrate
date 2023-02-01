@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import ru.karod.tsm.models.User;
-import ru.karod.tsm.models.enums.EmailType;
-import ru.karod.tsm.util.ErrorUtil;
 import ru.karod.tsm.util.UserUtil;
 
 /**
@@ -18,12 +16,15 @@ public class TsmUserUtilImpl implements UserUtil
 {
     @Value("${site_url}")
     private String siteURL;
+    @Value("${server.port}")
+    private String serverPort;
+
     @Value("${registration_postfix}")
     private String registrationPostfix;
 
     @Override
     public String getVerifyURLForUser(@NotNull final User user){
-        return siteURL + registrationPostfix + user.getVerificationCode();
+        return siteURL + ":" + serverPort + registrationPostfix + user.getVerificationCode();
     }
 
     @Override

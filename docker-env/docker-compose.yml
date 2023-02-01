@@ -38,7 +38,7 @@ services:
 
   flyway:
     container_name: flyway
-    image: flyway/flyway:9.12-alpine
+    image: flyway/flyway:9-alpine
     command: -configFiles=/flyway/conf/flyway.config -locations=filesystem:/flyway/sql -connectRetries=60 migrate
     volumes:
         - ./flyway/db/migration:/flyway/sql
