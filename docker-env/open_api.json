@@ -1,0 +1,118 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "title" : "WordPress resources for integration",
+    "version" : "1.0.0"
+  },
+  "host" : "167.172.164.208",
+  "schemes" : [
+    "http"
+  ],
+  "paths" : {
+    "/auth/sign_up" : {
+      "post" : {
+        "consumes" : [
+          "application/json"
+        ],
+        "produces" : [
+          "application/json"
+        ],
+        "summary" : "Post request for user signup",
+        "parameters" : [],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/MessageResponse",
+              "description" : "Text message of result of auth"
+            },
+            "examples" : {
+              "application/json" : "{\n  \"message\": \"Test message\"\n}"
+            },
+            "description": "Success response"
+          }
+        }
+      }
+    },
+    "/auth/sign_in" : {
+      "post" : {
+        "consumes" : [
+          "application/json"
+        ],
+        "produces" : [
+          "application/json"
+        ],
+        "summary" : "Post request for user signing",
+        "parameters" : [],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/JWTTokenSuccessResponse",
+              "description" : "Text message of result of auth"
+            },
+            "examples" : {
+              "application/json" : "{\n  \"message\": \"Test message\"\n}"
+            },
+            "description": "Success response"
+          }
+        }
+      }
+    },
+    "/subject" : {
+      "get" : {
+        "consumes" : [
+          "application/json"
+        ],
+        "produces" : [
+          "application/json"
+        ],
+        "summary" : "Get request for obtain the list of subjects",
+        "parameters" : [],
+        "responses" : {
+          "200" : {
+            "schema" : {
+              "$ref" : "#/definitions/SubjectsResponse",
+              "description" : "The list of subjects"
+            },
+            "examples" : {
+              "application/json" : "{\"subjectList\":[{\"id\":\"ef97eb6f-3396-4b39-97f0-7eecf7510d56\",\"language\":\"ENGLISH\"},{\"id\":\"119f32c5-fc48-4f12-a04c-7fb0a47c617f\",\"language\":\"GERMAN\"},{\"id\":\"dd1783ea-4d14-4a56-b279-5abee842ae19\",\"language\":\"FRENCH\"},{\"id\":\"234bcf9a-e814-4579-8c91-fd2fe6932c34\",\"language\":\"RUSSIAN\"},{\"id\":\"1f8867e6-7555-4456-8c26-b7fb1fca0a34\",\"language\":\"MALIAN\"},{\"id\":\"1358a9a8-8459-4a28-8b18-e63c6697e233\",\"language\":\"JAPANESE\"},{\"id\":\"cdca2395-13ba-47f3-b312-0bfbd79bfe52\",\"language\":\"PORTUGUESE\"},{\"id\":\"09dffbf5-7639-49d9-a142-34bbae4f2304\",\"language\":\"ARABIC\"},{\"id\":\"982f6415-b05c-460a-9fc3-45b6c5005c34\",\"language\":\"SPANISH\"},{\"id\":\"9ff47c27-5192-47ed-88b8-3f80c84efe02\",\"language\":\"CHINESE\"}]}\n"
+            },
+            "description": "Success response"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "MessageResponse": {
+      "properties" : {
+        "message": {
+          "type" : "string",
+          "description" : "Text message"
+        }
+      }
+    },
+    "SubjectsResponse": {
+      "properties" : {
+        "subjectList": {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/SubjectDTO"
+          },
+          "description" : "The list of subjects"
+        }
+      }
+    },
+    "SubjectDTO": {
+      "properties" : {
+        "id": {
+          "type" : "string",
+          "description" : "id"
+        },
+        "language": {
+          "type" : "string",
+          "description" : "language code: ENGLISH,\n    GERMAN,\n    FRENCH,\n    RUSSIAN,\n    MALIAN,\n    JAPANESE,\n    PORTUGUESE,\n    ARABIC,\n    SPANISH,\n    CHINESE"
+        }
+      }
+    }
+  }
+}

@@ -1,5 +1,8 @@
 package ru.karod.tsm.util.impl;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -14,8 +17,6 @@ import ru.karod.tsm.util.UserUtil;
 @Component
 public class TsmUserUtilImpl implements UserUtil
 {
-    @Value("${site_url}")
-    private String siteURL;
     @Value("${server.port}")
     private String serverPort;
 
@@ -24,7 +25,18 @@ public class TsmUserUtilImpl implements UserUtil
 
     @Override
     public String getVerifyURLForUser(@NotNull final User user){
-        return siteURL + ":" + serverPort + registrationPostfix + user.getVerificationCode();
+
+        String hostname = null;
+        try
+        {
+            hostname = InetAddress.getLocalHost().getHostAddress();
+        }
+        catch (UnknownHostException e)
+        {
+            throw new RuntimeException(e);
+        }
+        String serverURL = "http://" + hostname + ":" + serverPort;
+        return serverURL + registrationPostfix + user.getVerificationCode();
     }
 
     @Override

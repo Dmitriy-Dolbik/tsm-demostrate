@@ -1,6 +1,6 @@
 services:
   tsm-project:
-    image: tsm-project
+    image: dmitriidolbik/tsm-project:tsm-project
     container_name: tsm-project
     ports:
       - 8080:8080
