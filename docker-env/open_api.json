@@ -50,7 +50,7 @@
               "description" : "Text message of result of auth"
             },
             "examples" : {
-              "application/json" : "{\n  \"message\": \"Test message\"\n}"
+              "application/json" : "{\"token\": \"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIGRldGFpbHMiLCJpc3MiOiJ0c20iLCJpZCI6IjJlNjQ2YzcyLTYxMTAtNDUyNy1hMjk5LTU1N2FjMWE1MzljMiIsImV4cCI6MTY3NTYzMjQyMCwiaWF0IjoxNjc1NjI4ODIwfQ.WscnrYgtvLffJFCCBUGPtYiqvPP3nikIXQd4l--u19g\"}"
             },
             "description": "Success response"
           }
@@ -88,6 +88,14 @@
         "message": {
           "type" : "string",
           "description" : "Text message"
+        }
+      }
+    },
+    "JWTTokenSuccessResponse": {
+      "properties" : {
+        "token": {
+          "type" : "string",
+          "description" : "Value of token"
         }
       }
     },

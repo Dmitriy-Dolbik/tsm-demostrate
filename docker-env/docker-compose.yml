@@ -9,6 +9,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgrestsm
       - SPRING_DATASOURCE_PASSWORD=321456tsm
       - SPRING_JPA_HIBERNATE_DDL_AUTO=validate
+      - HOST=167.172.164.208
     volumes:
       - ./config:/config
     depends_on:

@@ -22,21 +22,12 @@ public class TsmUserUtilImpl implements UserUtil
 
     @Value("${registration_postfix}")
     private String registrationPostfix;
+    @Value("${site_url}")
+    private String siteURL;
 
     @Override
     public String getVerifyURLForUser(@NotNull final User user){
-
-        String hostname = null;
-        try
-        {
-            hostname = InetAddress.getLocalHost().getHostAddress();
-        }
-        catch (UnknownHostException e)
-        {
-            throw new RuntimeException(e);
-        }
-        String serverURL = "http://" + hostname + ":" + serverPort;
-        return serverURL + registrationPostfix + user.getVerificationCode();
+        return siteURL + ":" + serverPort + registrationPostfix + user.getVerificationCode();
     }
 
     @Override
