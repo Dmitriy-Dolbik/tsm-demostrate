@@ -47,7 +47,7 @@
           "200" : {
             "schema" : {
               "$ref" : "#/definitions/JWTTokenSuccessResponse",
-              "description" : "Text message of result of auth"
+              "description" : "JWTToken with 'Bearer' as a header"
             },
             "examples" : {
               "application/json" : "{\n  \"message\": \"Test message\"\n}"
