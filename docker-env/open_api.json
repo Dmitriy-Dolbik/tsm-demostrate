@@ -18,7 +18,16 @@
           "application/json"
         ],
         "summary" : "Post request for user signup",
-        "parameters" : [],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SignupRequest"
+            }
+          }
+        ],
         "responses" : {
           "200" : {
             "schema" : {
@@ -26,7 +35,7 @@
               "description" : "Text message of result of auth"
             },
             "examples" : {
-              "application/json" : "{\n  \"message\": \"Test message\"\n}"
+              "application/json" : "{\"message\": \"User registered successfully!\"}"
             },
             "description": "Success response"
           }
@@ -42,7 +51,16 @@
           "application/json"
         ],
         "summary" : "Post request for user signing",
-        "parameters" : [],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginRequest"
+            }
+          }
+        ],
         "responses" : {
           "200" : {
             "schema" : {
@@ -121,6 +139,76 @@
           "description" : "language code: ENGLISH,\n    GERMAN,\n    FRENCH,\n    RUSSIAN,\n    MALIAN,\n    JAPANESE,\n    PORTUGUESE,\n    ARABIC,\n    SPANISH,\n    CHINESE"
         }
       }
+    },
+    "SignupRequest": {
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "Email of the user",
+          "example": "jack123@gmail.com"
+        },
+        "role": {
+          "type": "string",
+          "description": "Role of the user",
+          "example": "ROLE_TEACHER"
+        },
+        "firstName": {
+          "type": "string",
+          "description": "First name of the user",
+          "example": "Dmitrii"
+        },
+        "lastName": {
+          "type": "string",
+          "description": "Last name of the user",
+          "example": "Dolbik"
+        },
+        "subjectIdList": {
+          "type": "array",
+          "description": "List of subject IDs",
+          "items": {
+            "type": "string",
+            "example": [
+              "ef97eb6f-3396-4b39-97f0-7eecf7510d56",
+              "119f32c5-fc48-4f12-a04c-7fb0a47c617f"
+            ]
+          }
+        },
+        "password": {
+          "type": "string",
+          "description": "Password of the user",
+          "example": "1Dfd33"
+        },
+        "confirmPassword": {
+          "type": "string",
+          "description": "Confirmation of the password",
+          "example": "1Dfd33"
+        }
+      },
+      "required": [
+        "email",
+        "role",
+        "subjectIdList",
+        "password",
+        "confirmPassword"
+      ]
+    },
+    "LoginRequest": {
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "Email of the user",
+          "example": "jack123@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "description": "Password of the user",
+          "example": "1Dfd33"
+        }
+      },
+      "required": [
+        "email",
+        "password"
+      ]
     }
   }
 }
