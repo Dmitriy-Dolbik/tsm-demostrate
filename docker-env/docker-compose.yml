@@ -9,7 +9,6 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgrestsm
       - SPRING_DATASOURCE_PASSWORD=321456tsm
       - SPRING_JPA_HIBERNATE_DDL_AUTO=validate
-      - HOST=167.172.164.208
     volumes:
       - ./config:/config
     depends_on:
@@ -46,5 +45,18 @@ services:
         - ./flyway/flyway.conf:/flyway/conf/flyway.config
     depends_on:
         - tsm_postgres
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: swagger-ui
+    ports:
+      - "80:8087”
+    volumes:
+      - ./open_api.json:/open_api.json
+    environment:
+      SWAGGER_JSON: /open_api.json
+
+
+
 
 
