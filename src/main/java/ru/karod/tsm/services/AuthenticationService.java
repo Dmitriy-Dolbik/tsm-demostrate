@@ -14,5 +14,5 @@ import ru.karod.tsm.security.request.SignupRequest;
  */
 public interface AuthenticationService {
     ResponseEntity<Object> login(@NotNull final LoginRequest loginRequest, @NotNull final BindingResult bindingResult);
-    void register (@NotNull final SignupRequest signupRequest, @NotNull final BindingResult bindingResult, HttpServletRequest request);
+    void register (@NotNull final SignupRequest signupRequest, @NotNull final BindingResult bindingResult);
 }

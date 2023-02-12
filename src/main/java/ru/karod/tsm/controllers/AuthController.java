@@ -31,9 +31,8 @@ public class AuthController {
     @PostMapping("/sign_up")
     public ResponseEntity<Object> registerUser(@RequestBody @Valid
                                                SignupRequest signupRequest,
-                                               BindingResult bindingResult,
-                                               HttpServletRequest request) {
-        tsmAuthenticationServiceImpl.register(signupRequest, bindingResult, request);
+                                               BindingResult bindingResult) {
+        tsmAuthenticationServiceImpl.register(signupRequest, bindingResult);
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 

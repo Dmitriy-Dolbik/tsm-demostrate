@@ -50,13 +50,9 @@ services:
     image: swaggerapi/swagger-ui
     container_name: swagger-ui
     ports:
-      - "80:8087”
+      - 80:8080
     volumes:
-      - ./open_api.json:/open_api.json
+      - ./swagger:/swagger
     environment:
-      SWAGGER_JSON: /open_api.json
-
-
-
-
+      SWAGGER_JSON: /swagger/open_api.json
 

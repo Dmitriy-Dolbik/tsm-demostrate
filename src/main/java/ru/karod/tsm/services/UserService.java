@@ -19,7 +19,7 @@ public interface UserService
 
     Optional<User> findUserByEmail(@NotNull final String email);
 
-    void register(@NotNull final User user, @NotNull final String siteURL);
+    User register(@NotNull final User user);
 
     boolean verify(@NotNull final String verificationCode);
 }

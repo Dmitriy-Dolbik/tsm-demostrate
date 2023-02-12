@@ -21,4 +21,11 @@ public class Subject {
 
     @ManyToMany(mappedBy = "subjects")
     private List<User> teachers;
+
+    public Subject(){
+    }
+    public Subject(String id, Language language){
+        this.id = id;
+        this.language = language;
+    }
 }

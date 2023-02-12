@@ -65,7 +65,7 @@ public class TsmUserServiceImpl implements UserService
     }
 
     @Override
-    public void register(@NotNull final User user, @NotNull final String siteURL)
+    public User register(@NotNull final User user)
     {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
@@ -77,10 +77,11 @@ public class TsmUserServiceImpl implements UserService
         user.setVerificationCode(randomCode);
         user.setVerified(false);
 
+        User registeredUser = null;
         try
         {
             log.info("Saving User {}", user.getEmail());
-            userRepository.save(user);
+            registeredUser = userRepository.save(user);
         }
         catch (RollbackException rolExc)
         {
@@ -89,6 +90,7 @@ public class TsmUserServiceImpl implements UserService
             throw new InvalidRequestValuesException("The user with email " + user.getUsername() + ". Error during registration: " + rolExc.getMessage());
         }
         tsmNotificationService.sendVerificationLetterForUser(user);
+        return registeredUser;
     }
 
     @Override

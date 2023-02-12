@@ -73,7 +73,7 @@ public class TsmAuthenticationServiceImpl implements AuthenticationService
     }
 
     @Override
-    public void register(@NotNull final SignupRequest signupRequest, @NotNull final BindingResult bindingResult, HttpServletRequest request)
+    public void register(@NotNull final SignupRequest signupRequest, @NotNull final BindingResult bindingResult)
     {
         User user = modelMapper.map(signupRequest, User.class);
         userValidator.validate(user, bindingResult);
@@ -82,7 +82,7 @@ public class TsmAuthenticationServiceImpl implements AuthenticationService
             String errorMsg = tsmErrorUtilImpl.createErrorMessageToClient(bindingResult);
             throw new AuthException(errorMsg);
         }
-        tsmUserServiceImpl.register(user, getSiteURL(request));
+        tsmUserServiceImpl.register(user);
     }
 
     private String getSiteURL(HttpServletRequest request)

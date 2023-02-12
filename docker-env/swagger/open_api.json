@@ -1,0 +1,274 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "WordPress resources for integration",
+    "version": "1.0.0"
+  },
+  "host": "167.172.164.208",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/auth/sign_up": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Post request for user signup",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SignupRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/MessageResponse",
+              "description": "Text message of result of auth"
+            },
+            "examples": {
+              "application/json": "{\"message\": \"User registered successfully!\"}"
+            },
+            "description": "Success response"
+          }
+        }
+      }
+    },
+    "/auth/sign_in": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Post request for user signing",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/JWTTokenSuccessResponse",
+              "description": "Text message of result of auth"
+            },
+            "examples": {
+              "application/json": "{\"token\": \"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIGRldGFpbHMiLCJpc3MiOiJ0c20iLCJpZCI6IjJlNjQ2YzcyLTYxMTAtNDUyNy1hMjk5LTU1N2FjMWE1MzljMiIsImV4cCI6MTY3NTYzMjQyMCwiaWF0IjoxNjc1NjI4ODIwfQ.WscnrYgtvLffJFCCBUGPtYiqvPP3nikIXQd4l--u19g\"}"
+            },
+            "description": "Success response"
+          }
+        }
+      }
+    },
+    "/subject": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Get request for obtain the list of subjects",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/SubjectsResponse",
+              "description": "The list of subjects"
+            },
+            "examples": {
+              "application/json": "{\"subjectList\":[{\"id\":\"ef97eb6f-3396-4b39-97f0-7eecf7510d56\",\"language\":\"ENGLISH\"},{\"id\":\"119f32c5-fc48-4f12-a04c-7fb0a47c617f\",\"language\":\"GERMAN\"},{\"id\":\"dd1783ea-4d14-4a56-b279-5abee842ae19\",\"language\":\"FRENCH\"},{\"id\":\"234bcf9a-e814-4579-8c91-fd2fe6932c34\",\"language\":\"RUSSIAN\"},{\"id\":\"1f8867e6-7555-4456-8c26-b7fb1fca0a34\",\"language\":\"MALIAN\"},{\"id\":\"1358a9a8-8459-4a28-8b18-e63c6697e233\",\"language\":\"JAPANESE\"},{\"id\":\"cdca2395-13ba-47f3-b312-0bfbd79bfe52\",\"language\":\"PORTUGUESE\"},{\"id\":\"09dffbf5-7639-49d9-a142-34bbae4f2304\",\"language\":\"ARABIC\"},{\"id\":\"982f6415-b05c-460a-9fc3-45b6c5005c34\",\"language\":\"SPANISH\"},{\"id\":\"9ff47c27-5192-47ed-88b8-3f80c84efe02\",\"language\":\"CHINESE\"}]}\n"
+            },
+            "description": "Success response"
+          }
+        }
+      }
+    },
+    "/user/update": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Post request to update the user",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/UserDTO",
+              "description": "The updated user"
+            },
+            "examples": {
+              "application/json": "{\n    \"id\": \"3907ddfa-e25d-4050-99d7-5b6ed69bbd30\",\n    \"firstName\": \"Jack\",\n    \"lastName\": \"Johnson\",\n    \"age\": 18,\n    \"phoneNumber\": \"8930303040324\"\n}"
+            },
+            "description": "Success response"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "MessageResponse": {
+      "properties": {
+        "message": {
+          "type": "string",
+          "description": "Text message"
+        }
+      }
+    },
+    "JWTTokenSuccessResponse": {
+      "properties": {
+        "token": {
+          "type": "string",
+          "description": "Value of token"
+        }
+      }
+    },
+    "SubjectsResponse": {
+      "properties": {
+        "subjectList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SubjectDTO"
+          },
+          "description": "The list of subjects"
+        }
+      }
+    },
+    "SubjectDTO": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "id"
+        },
+        "language": {
+          "type": "string",
+          "description": "language code: ENGLISH,\n    GERMAN,\n    FRENCH,\n    RUSSIAN,\n    MALIAN,\n    JAPANESE,\n    PORTUGUESE,\n    ARABIC,\n    SPANISH,\n    CHINESE"
+        }
+      }
+    },
+    "SignupRequest": {
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "Email of the user",
+          "example": "jack123@gmail.com"
+        },
+        "role": {
+          "type": "string",
+          "description": "Role of the user",
+          "example": "ROLE_TEACHER"
+        },
+        "firstName": {
+          "type": "string",
+          "description": "First name of the user",
+          "example": "Dmitrii"
+        },
+        "lastName": {
+          "type": "string",
+          "description": "Last name of the user",
+          "example": "Dolbik"
+        },
+        "subjectIdList": {
+          "type": "array",
+          "description": "List of subject IDs",
+          "items": {
+            "type": "string",
+            "example": [
+              "ef97eb6f-3396-4b39-97f0-7eecf7510d56",
+              "119f32c5-fc48-4f12-a04c-7fb0a47c617f"
+            ]
+          }
+        },
+        "password": {
+          "type": "string",
+          "description": "Password of the user",
+          "example": "1Dfd33"
+        },
+        "confirmPassword": {
+          "type": "string",
+          "description": "Confirmation of the password",
+          "example": "1Dfd33"
+        }
+      },
+      "required": [
+        "email",
+        "role",
+        "subjectIdList",
+        "password",
+        "confirmPassword"
+      ]
+    },
+    "LoginRequest": {
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "Email of the user",
+          "example": "jack123@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "description": "Password of the user",
+          "example": "1Dfd33"
+        }
+      },
+      "required": [
+        "email",
+        "password"
+      ]
+    },
+    "UserDTO": {
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "description": "The first name of the user",
+          "example": "Jack"
+        },
+        "lastName": {
+          "type": "string",
+          "description": "The last name of the user",
+          "example": "Johnson"
+        },
+        "age": {
+          "type": "short",
+          "description": "The age of the user",
+          "example": "18"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "The phone number of the user",
+          "example": "8930303040324"
+        }
+      },
+      "required": [
+      ]
+    }
+  }
+}
+

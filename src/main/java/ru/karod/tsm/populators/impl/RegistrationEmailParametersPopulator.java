@@ -38,6 +38,7 @@ public class RegistrationEmailParametersPopulator implements TsmPopulator<User>
         Map<String, String> params = new HashMap<>();
         params.put("${fullName}", fullName);
         params.put("${verification_url}", verifyURL);
+
         return params;
     }
 }

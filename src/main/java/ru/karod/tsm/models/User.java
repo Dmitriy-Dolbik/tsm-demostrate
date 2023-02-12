@@ -75,6 +75,15 @@ public class User implements UserDetails {
     @Column(name = "created_date")
     private LocalDateTime createdDate;
 
+    public User(String email, Role role, String firstName, String lastName, List<Subject> subjects, String password){
+        this.email = email;
+        this.role = role;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.subjects = subjects;
+        this.password = password;
+    }
+
     @PrePersist
     protected void onCreate() {
         this.createdDate = LocalDateTime.now();
