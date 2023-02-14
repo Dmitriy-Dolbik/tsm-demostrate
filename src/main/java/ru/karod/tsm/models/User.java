@@ -1,22 +1,32 @@
 package ru.karod.tsm.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import ru.karod.tsm.annotations.ValidEmail;
-import ru.karod.tsm.annotations.ValidPassword;
-import ru.karod.tsm.models.enums.Role;
-import ru.karod.tsm.models.enums.UserStatus;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import ru.karod.tsm.annotations.ValidEmail;
+import ru.karod.tsm.models.enums.Role;
+import ru.karod.tsm.models.enums.UserStatus;
 
 @Data
 @NoArgsConstructor
@@ -74,15 +84,6 @@ public class User implements UserDetails {
     @JsonFormat(pattern = "yyyy-mm-dd HH:mm:ss")
     @Column(name = "created_date")
     private LocalDateTime createdDate;
-
-    public User(String email, Role role, String firstName, String lastName, List<Subject> subjects, String password){
-        this.email = email;
-        this.role = role;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.subjects = subjects;
-        this.password = password;
-    }
 
     @PrePersist
     protected void onCreate() {

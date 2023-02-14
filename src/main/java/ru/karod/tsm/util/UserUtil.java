@@ -21,6 +21,6 @@ public interface UserUtil
      * where keys contain verification_url and full name of user.
      * If user's first and last name are null then the full name is replaced with "customer"
      */
-    String getFullNameForEmailTemplate(@NotNull final User user);
+    String getUserFullNameForEmailTemplate(@NotNull final User user);
 
 }

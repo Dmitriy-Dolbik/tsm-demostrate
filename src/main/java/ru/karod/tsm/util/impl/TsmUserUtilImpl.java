@@ -19,28 +19,29 @@ public class TsmUserUtilImpl implements UserUtil
 {
     @Value("${server.port}")
     private String serverPort;
-
     @Value("${registration_postfix}")
     private String registrationPostfix;
     @Value("${site_url}")
     private String siteURL;
 
     @Override
-    public String getVerifyURLForUser(@NotNull final User user){
+    public String getVerifyURLForUser(@NotNull final User user)
+    {
         return siteURL + ":" + serverPort + registrationPostfix + user.getVerificationCode();
     }
 
     @Override
-    public String getFullNameForEmailTemplate(@NotNull final User user){
+    public String getUserFullNameForEmailTemplate(@NotNull final User user)
+    {
         StringBuilder fullUsername = new StringBuilder();
         if (user.getFirstName() != null)
         {
-            fullUsername.append(user.getFirstName());
+            fullUsername.append(user.getFirstName())
+                    .append(" ");
         }
         if (user.getLastName() != null)
         {
             fullUsername
-                    .append(" ")
                     .append(user.getLastName());
         }
         if (fullUsername.length() == 0)

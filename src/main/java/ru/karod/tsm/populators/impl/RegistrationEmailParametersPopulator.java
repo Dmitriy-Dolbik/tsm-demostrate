@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import ru.karod.tsm.models.User;
 import ru.karod.tsm.models.enums.EmailType;
 import ru.karod.tsm.populators.TsmPopulator;
+import ru.karod.tsm.util.UserUtil;
 import ru.karod.tsm.util.impl.TsmUserUtilImpl;
 
 /**
@@ -21,7 +22,7 @@ import ru.karod.tsm.util.impl.TsmUserUtilImpl;
 @RequiredArgsConstructor
 public class RegistrationEmailParametersPopulator implements TsmPopulator<User>
 {
-    private final TsmUserUtilImpl tsmUserUtilImpl;
+    private final UserUtil tsmUserUtilImpl;
 
     /**
      * @param source user
@@ -33,10 +34,10 @@ public class RegistrationEmailParametersPopulator implements TsmPopulator<User>
     public Map<String, String> populate(@NotNull final User source)
     {
         String verifyURL = tsmUserUtilImpl.getVerifyURLForUser(source);
-        String fullName = tsmUserUtilImpl.getFullNameForEmailTemplate(source);
+        String userFullName = tsmUserUtilImpl.getUserFullNameForEmailTemplate(source);
 
         Map<String, String> params = new HashMap<>();
-        params.put("${fullName}", fullName);
+        params.put("${fullName}", userFullName);
         params.put("${verification_url}", verifyURL);
 
         return params;
